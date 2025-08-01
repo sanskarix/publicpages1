@@ -1,0 +1,205 @@
+import { useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, Calendar, Clock, MapPin } from "lucide-react";
+import { MonthlyView } from "@/components/calendar/MonthlyView";
+import { WeeklyView } from "@/components/calendar/WeeklyView";
+import { ColumnView } from "@/components/calendar/ColumnView";
+
+type ViewType = "monthly" | "weekly" | "column";
+
+const eventTypes = {
+  "product-hunt-chats": {
+    title: "Product Hunt Chats",
+    description: "The essence of Product Hunt reflects in communities. Select a time suitable for you, and let's talk products!",
+    duration: "15m",
+    color: "bg-green-100 text-green-700"
+  },
+  "interviews": {
+    title: "Interviews", 
+    description: "Let's chat about how your skills can be an asset for our team. No stress, just good vibes and great questions!",
+    duration: "30m",
+    color: "bg-blue-100 text-blue-700"
+  },
+  "product-demo": {
+    title: "Product Demo",
+    description: "Product innovation in action! Reserve a time for a personalized demo of our next-gen scheduler.",
+    duration: "30m",
+    color: "bg-purple-100 text-purple-700"
+  },
+  "everything-else": {
+    title: "Everything Else",
+    description: "Open Agenda! Let's brainstorm over coffee or talk about your favorite singer. Whatever it is, I'm all ears! 😊",
+    duration: "15m",
+    color: "bg-orange-100 text-orange-700"
+  },
+  "recurring-event": {
+    title: "Recurring Event",
+    description: "Testing out the Recurring Meetup",
+    duration: "15m",
+    color: "bg-pink-100 text-pink-700"
+  }
+};
+
+export default function BookingCalendar() {
+  const { eventId } = useParams<{ eventId: string }>();
+  const [selectedView, setSelectedView] = useState<ViewType>("monthly");
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+
+  const eventType = eventId ? eventTypes[eventId as keyof typeof eventTypes] : null;
+
+  if (!eventType) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gradient-start via-gradient-mid to-gradient-end flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-heading mb-4">Event not found</h1>
+          <Link to="/" className="text-accent hover:underline">
+            Return to profile
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const handleTimeSelect = (date: Date, time: string) => {
+    setSelectedDate(date);
+    setSelectedTime(time);
+  };
+
+  const handleBookingConfirm = () => {
+    if (selectedDate && selectedTime && eventId) {
+      window.location.href = `/book/${eventId}/form?date=${selectedDate.toISOString()}&time=${selectedTime}`;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gradient-start via-gradient-mid to-gradient-end">
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        {/* Header */}
+        <div className="flex items-center gap-4 mb-8">
+          <Link to="/" className="p-2 hover:bg-white/50 rounded-lg transition-colors">
+            <ArrowLeft className="w-5 h-5 text-body-text" />
+          </Link>
+          
+          <div className="flex items-center gap-3">
+            <img 
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face"
+              alt="Sanskar Yadav"
+              className="w-10 h-10 rounded-full object-cover"
+            />
+            <div>
+              <h1 className="text-xl font-semibold text-heading">Sanskar Yadav</h1>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid lg:grid-cols-12 gap-8">
+          {/* Left Panel - Event Details */}
+          <div className="lg:col-span-4">
+            <div className="bg-white rounded-lg p-6 shadow-sm border border-grey-container sticky top-8">
+              <h2 className="text-xl font-semibold text-heading mb-3">
+                {eventType.title}
+              </h2>
+              
+              <p className="text-body-text text-sm mb-6 leading-relaxed">
+                {eventType.description}
+              </p>
+              
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 text-secondary-text">
+                  <Clock className="w-4 h-4" />
+                  <span className="text-sm">{eventType.duration}</span>
+                </div>
+                <div className="flex items-center gap-3 text-secondary-text">
+                  <MapPin className="w-4 h-4" />
+                  <span className="text-sm">Google Meet</span>
+                </div>
+                <div className="flex items-center gap-3 text-secondary-text">
+                  <Calendar className="w-4 h-4" />
+                  <span className="text-sm">AeroKokata</span>
+                </div>
+              </div>
+
+              {selectedDate && selectedTime && (
+                <div className="mt-6 pt-6 border-t border-grey-container">
+                  <h3 className="font-medium text-heading mb-3">Selected Time</h3>
+                  <div className="bg-grey-container rounded-lg p-3 mb-4">
+                    <p className="text-sm text-body-text">
+                      {selectedDate.toLocaleDateString("en-US", { 
+                        weekday: "long", 
+                        year: "numeric", 
+                        month: "long", 
+                        day: "numeric" 
+                      })}
+                    </p>
+                    <p className="text-sm font-medium text-heading">
+                      {selectedTime}
+                    </p>
+                  </div>
+                  <Button 
+                    onClick={handleBookingConfirm}
+                    className="w-full bg-accent hover:bg-accent/90 text-white"
+                  >
+                    Confirm
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Right Panel - Calendar */}
+          <div className="lg:col-span-8">
+            <div className="bg-white rounded-lg shadow-sm border border-grey-container">
+              {/* View Switcher */}
+              <div className="flex items-center justify-between p-6 border-b border-grey-container">
+                <h3 className="font-semibold text-heading">Select a Date & Time</h3>
+                <div className="flex gap-1 bg-grey-container rounded-lg p-1">
+                  <Button
+                    variant={selectedView === "monthly" ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setSelectedView("monthly")}
+                    className={selectedView === "monthly" ? "bg-accent text-white" : "text-secondary-text hover:text-body-text"}
+                  >
+                    12h
+                  </Button>
+                  <Button
+                    variant={selectedView === "weekly" ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setSelectedView("weekly")}
+                    className={selectedView === "weekly" ? "bg-accent text-white" : "text-secondary-text hover:text-body-text"}
+                  >
+                    24h
+                  </Button>
+                </div>
+              </div>
+
+              {/* Calendar Content */}
+              <div className="p-6">
+                {selectedView === "monthly" && (
+                  <MonthlyView onTimeSelect={handleTimeSelect} />
+                )}
+                {selectedView === "weekly" && (
+                  <WeeklyView onTimeSelect={handleTimeSelect} />
+                )}
+                {selectedView === "column" && (
+                  <ColumnView onTimeSelect={handleTimeSelect} />
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="text-center mt-12">
+          <div className="inline-flex items-center gap-2 text-accent font-medium">
+            <div className="w-6 h-6 bg-accent rounded flex items-center justify-center">
+              <span className="text-white text-xs font-bold">O</span>
+            </div>
+            OneHash
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
