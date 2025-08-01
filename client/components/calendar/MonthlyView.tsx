@@ -6,13 +6,16 @@ interface MonthlyViewProps {
   onTimeSelect: (date: Date, time: string) => void;
 }
 
-const timeSlots = [
-  "16:30", "16:45", "17:00", "17:15", "17:30", "17:45", "18:00"
+const timeSlots12h = [
+  "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
+  "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM",
+  "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM",
+  "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM"
 ];
 
 export function MonthlyView({ onTimeSelect }: MonthlyViewProps) {
   const [currentDate, setCurrentDate] = useState(new Date(2025, 6)); // July 2025
-  const [selectedDate, setSelectedDate] = useState<number | null>(31);
+  const [selectedDate, setSelectedDate] = useState<number | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
   const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
@@ -99,7 +102,7 @@ export function MonthlyView({ onTimeSelect }: MonthlyViewProps) {
               {day && (
                 <Button
                   variant="ghost"
-                  className={`w-full h-full text-sm hover:bg-grey-container ${
+                  className={`w-full h-full text-sm hover:bg-grey-container transition-colors ${
                     selectedDate === day 
                       ? "bg-accent text-white hover:bg-accent/90" 
                       : "text-body-text"
@@ -114,26 +117,24 @@ export function MonthlyView({ onTimeSelect }: MonthlyViewProps) {
         </div>
       </div>
 
-      {/* Time Selector - Right Side */}
+      {/* Time Selector - Right Side (only show when date selected) */}
       {selectedDate && (
         <div className="w-48 animate-in slide-in-from-right-8 duration-300">
           <div className="bg-white border border-grey-container rounded-lg p-4">
-            <div className="flex items-center justify-between mb-3">
-              <h4 className="text-sm font-medium text-heading">Thu 31</h4>
-              <div className="flex gap-1 text-xs text-secondary-text">
-                <span>12h</span>
-                <span className="bg-accent text-white px-2 py-0.5 rounded">24h</span>
-              </div>
+            <div className="mb-3">
+              <h4 className="text-sm font-medium text-heading">
+                {dayNames[(selectedDate + firstDayOfMonth - 1) % 7]} {selectedDate}
+              </h4>
             </div>
             
-            <div className="space-y-1">
-              {timeSlots.map((time) => (
+            <div className="max-h-60 overflow-y-auto space-y-1">
+              {timeSlots12h.map((time) => (
                 <Button
                   key={time}
                   variant="ghost"
                   size="sm"
                   onClick={() => handleTimeSelect(time)}
-                  className={`w-full justify-start text-xs h-8 ${
+                  className={`w-full justify-start text-xs h-8 transition-colors ${
                     selectedTime === time
                       ? "bg-accent text-white hover:bg-accent/90"
                       : "hover:bg-grey-container text-body-text"
@@ -142,18 +143,6 @@ export function MonthlyView({ onTimeSelect }: MonthlyViewProps) {
                   {time}
                 </Button>
               ))}
-            </div>
-
-            <div className="mt-3 pt-3 border-t border-grey-container">
-              <div className="flex items-center justify-between text-xs text-secondary-text">
-                <span>Overlay my calendar</span>
-                <div className="flex gap-1">
-                  <div className="w-3 h-3 border border-grey-container rounded-sm hover:border-accent/50 cursor-pointer"></div>
-                  <div className="w-3 h-3 border border-grey-container rounded-sm hover:border-accent/50 cursor-pointer"></div>
-                  <div className="w-3 h-3 border border-grey-container rounded-sm hover:border-accent/50 cursor-pointer"></div>
-                  <div className="w-3 h-3 border border-grey-container rounded-sm hover:border-accent/50 cursor-pointer"></div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
