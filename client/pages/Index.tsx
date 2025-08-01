@@ -46,20 +46,20 @@ export default function Index() {
     <div className="min-h-screen bg-gradient-to-br from-gradient-start via-gradient-mid to-gradient-end">
       <div className="max-w-2xl mx-auto px-6 py-12">
         {/* Profile Section */}
-        <div className="text-center mb-12">
-          <div className="relative inline-block mb-6">
-            <img 
+        <div className="text-center mb-12 animate-in fade-in-50 duration-700">
+          <div className="relative inline-block mb-6 animate-in zoom-in-50 duration-500 delay-200">
+            <img
               src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
               alt="Sanskar Yadav"
-              className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
+              className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg hover:shadow-xl transition-shadow duration-300"
             />
           </div>
-          
-          <h1 className="text-3xl font-bold text-heading mb-2">
+
+          <h1 className="text-3xl font-bold text-heading mb-2 animate-in slide-in-from-bottom-4 duration-500 delay-300">
             Sanskar Yadav
           </h1>
-          
-          <p className="text-secondary-text text-lg mb-8">
+
+          <p className="text-secondary-text text-lg mb-8 animate-in slide-in-from-bottom-4 duration-500 delay-400">
             Head of Growth @OneHash | Building the craziest tools on the internet 🚀
           </p>
         </div>
