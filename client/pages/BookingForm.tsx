@@ -161,7 +161,7 @@ export default function BookingForm() {
           </div>
 
           {/* Right Panel - Booking Form */}
-          <div className="lg:col-span-8">
+          <div className="lg:col-span-8 animate-in slide-in-from-right-8 duration-500 delay-200">
             <div className="bg-white rounded-lg p-6 shadow-sm border border-grey-container">
               <h3 className="text-xl font-semibold text-heading mb-6">
                 Enter Details
