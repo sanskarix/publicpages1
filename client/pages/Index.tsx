@@ -76,8 +76,8 @@ export default function Index() {
               <div className="bg-white rounded-lg p-4 shadow-sm border border-grey-container hover:shadow-md transition-all duration-200 hover:border-accent/20 group-hover:scale-[1.01] hover:-translate-y-1">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <h3 className="text-lg font-semibold text-heading">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-base font-semibold text-heading">
                         {eventType.title}
                       </h3>
                       {eventType.recurring && (
@@ -86,8 +86,8 @@ export default function Index() {
                         </span>
                       )}
                     </div>
-                    
-                    <p className="text-body-text text-sm mb-4 leading-relaxed">
+
+                    <p className="text-body-text text-sm mb-3 leading-relaxed">
                       {eventType.description}
                     </p>
                     
