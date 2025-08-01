@@ -59,7 +59,7 @@ export default function BookingConfirmation() {
   })();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gradient-start via-gradient-mid to-gradient-end">
+    <div className="min-h-screen bg-white">
       <div className="max-w-2xl mx-auto px-6 py-12">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
