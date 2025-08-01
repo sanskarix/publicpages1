@@ -73,7 +73,7 @@ export default function Index() {
               className="block group animate-in slide-in-from-bottom-8 duration-500"
               style={{ animationDelay: `${500 + index * 100}ms` }}
             >
-              <div className="bg-white rounded-lg p-6 shadow-sm border border-grey-container hover:shadow-md transition-all duration-200 hover:border-accent/20 group-hover:scale-[1.01] hover:-translate-y-1">
+              <div className="bg-white rounded-lg p-4 shadow-sm border border-grey-container hover:shadow-md transition-all duration-200 hover:border-accent/20 group-hover:scale-[1.01] hover:-translate-y-1">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
