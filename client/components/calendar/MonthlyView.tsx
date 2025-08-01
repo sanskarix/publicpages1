@@ -136,10 +136,10 @@ export function MonthlyView({ onTimeSelect }: MonthlyViewProps) {
                 variant="outline"
                 size="sm"
                 onClick={() => handleTimeSelect(time)}
-                className={`${
+                className={`transition-all duration-200 ${
                   selectedTime === time
-                    ? "bg-accent text-white border-accent hover:bg-accent/90"
-                    : "border-grey-container hover:border-accent/50 hover:bg-grey-container/50"
+                    ? "bg-accent text-white border-accent hover:bg-accent/90 animate-pulse"
+                    : "border-grey-container hover:border-accent/50 hover:bg-grey-container/50 hover:scale-105"
                 }`}
               >
                 {time}
