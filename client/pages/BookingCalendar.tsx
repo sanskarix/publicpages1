@@ -78,20 +78,42 @@ export default function BookingCalendar() {
     <div className="min-h-screen bg-white">
       <div className="max-w-6xl mx-auto px-4 py-6">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
-          <Link to="/" className="p-2 hover:bg-white/50 rounded-lg transition-colors">
-            <ArrowLeft className="w-5 h-5 text-body-text" />
-          </Link>
-          
-          <div className="flex items-center gap-3">
-            <img 
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face"
-              alt="Sanskar Yadav"
-              className="w-10 h-10 rounded-full object-cover"
-            />
-            <div>
-              <h1 className="text-xl font-semibold text-heading">Sanskar Yadav</h1>
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-4">
+            <Link to="/" className="p-2 hover:bg-white/50 rounded-lg transition-colors">
+              <ArrowLeft className="w-5 h-5 text-body-text" />
+            </Link>
+
+            <div className="flex items-center gap-3">
+              <img
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face"
+                alt="Sanskar Yadav"
+                className="w-10 h-10 rounded-full object-cover"
+              />
+              <div>
+                <h1 className="text-xl font-semibold text-heading">Sanskar Yadav</h1>
+              </div>
             </div>
+          </div>
+
+          {/* View Switcher */}
+          <div className="flex gap-1 bg-grey-container rounded-lg p-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setSelectedView("monthly")}
+              className={selectedView === "monthly" ? "bg-accent text-white hover:bg-accent/90" : "text-secondary-text hover:text-body-text"}
+            >
+              Monthly
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setSelectedView("weekly")}
+              className={selectedView === "weekly" ? "bg-accent text-white hover:bg-accent/90" : "text-secondary-text hover:text-body-text"}
+            >
+              Weekly
+            </Button>
           </div>
         </div>
 
