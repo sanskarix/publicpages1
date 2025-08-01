@@ -23,7 +23,7 @@ export function MonthlyView({ onTimeSelect }: MonthlyViewProps) {
     "July", "August", "September", "October", "November", "December"
   ];
   
-  const dayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  const dayNames = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 
   const days = [];
   
@@ -57,94 +57,104 @@ export function MonthlyView({ onTimeSelect }: MonthlyViewProps) {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Calendar Header */}
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-heading">
-          {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
-        </h3>
-        <div className="flex gap-1">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => navigateMonth('prev')}
-            className="h-8 w-8 p-0 hover:bg-grey-container"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => navigateMonth('next')}
-            className="h-8 w-8 p-0 hover:bg-grey-container"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </Button>
+    <div className="flex gap-6">
+      {/* Calendar */}
+      <div className="flex-1">
+        {/* Calendar Header */}
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-medium text-heading">
+            {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
+          </h3>
+          <div className="flex gap-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigateMonth('prev')}
+              className="h-7 w-7 p-0 hover:bg-grey-container"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigateMonth('next')}
+              className="h-7 w-7 p-0 hover:bg-grey-container"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-7 gap-px bg-grey-container rounded-lg overflow-hidden">
+          {/* Day headers */}
+          {dayNames.map((day) => (
+            <div key={day} className="bg-white text-center py-2 text-xs font-medium text-secondary-text">
+              {day}
+            </div>
+          ))}
+          
+          {/* Calendar days */}
+          {days.map((day, index) => (
+            <div key={index} className="bg-white h-10">
+              {day && (
+                <Button
+                  variant="ghost"
+                  className={`w-full h-full text-sm hover:bg-grey-container ${
+                    selectedDate === day 
+                      ? "bg-accent text-white hover:bg-accent/90" 
+                      : "text-body-text"
+                  }`}
+                  onClick={() => handleDateSelect(day)}
+                >
+                  {day}
+                </Button>
+              )}
+            </div>
+          ))}
         </div>
       </div>
 
-      <div className="grid grid-cols-7 gap-1">
-        {/* Day headers */}
-        {dayNames.map((day) => (
-          <div key={day} className="text-center py-2 text-xs font-medium text-secondary-text">
-            {day}
-          </div>
-        ))}
-        
-        {/* Calendar days */}
-        {days.map((day, index) => (
-          <div key={index} className="aspect-square">
-            {day && (
-              <Button
-                variant="ghost"
-                className={`w-full h-full text-sm hover:bg-grey-container ${
-                  selectedDate === day 
-                    ? "bg-accent text-white hover:bg-accent/90" 
-                    : "text-body-text"
-                }`}
-                onClick={() => handleDateSelect(day)}
-              >
-                {day}
-              </Button>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* Time Slots */}
+      {/* Time Selector - Right Side */}
       {selectedDate && (
-        <div className="border-t border-grey-container pt-6">
-          <div className="flex items-center justify-between mb-4">
-            <h4 className="font-medium text-heading">
-              Thursday, July {selectedDate}, 2025
-            </h4>
-            <div className="flex gap-2 text-sm text-secondary-text">
-              <span>Overlay my calendar</span>
-              <div className="flex gap-1">
-                <button className="w-4 h-4 border border-grey-container rounded"></button>
-                <button className="w-4 h-4 border border-grey-container rounded"></button>
-                <button className="w-4 h-4 border border-grey-container rounded"></button>
-                <button className="w-4 h-4 border border-grey-container rounded"></button>
+        <div className="w-48 animate-in slide-in-from-right-8 duration-300">
+          <div className="bg-white border border-grey-container rounded-lg p-4">
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="text-sm font-medium text-heading">Thu 31</h4>
+              <div className="flex gap-1 text-xs text-secondary-text">
+                <span>12h</span>
+                <span className="bg-accent text-white px-2 py-0.5 rounded">24h</span>
               </div>
             </div>
-          </div>
-          
-          <div className="grid grid-cols-4 gap-2">
-            {timeSlots.map((time) => (
-              <Button
-                key={time}
-                variant="outline"
-                size="sm"
-                onClick={() => handleTimeSelect(time)}
-                className={`transition-all duration-200 ${
-                  selectedTime === time
-                    ? "bg-accent text-white border-accent hover:bg-accent/90 animate-pulse"
-                    : "border-grey-container hover:border-accent/50 hover:bg-grey-container/50 hover:scale-105"
-                }`}
-              >
-                {time}
-              </Button>
-            ))}
+            
+            <div className="space-y-1">
+              {timeSlots.map((time) => (
+                <Button
+                  key={time}
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleTimeSelect(time)}
+                  className={`w-full justify-start text-xs h-8 ${
+                    selectedTime === time
+                      ? "bg-accent text-white hover:bg-accent/90"
+                      : "hover:bg-grey-container text-body-text"
+                  }`}
+                >
+                  {time}
+                </Button>
+              ))}
+            </div>
+
+            <div className="mt-3 pt-3 border-t border-grey-container">
+              <div className="flex items-center justify-between text-xs text-secondary-text">
+                <span>Overlay my calendar</span>
+                <div className="flex gap-1">
+                  <div className="w-3 h-3 border border-grey-container rounded-sm hover:border-accent/50 cursor-pointer"></div>
+                  <div className="w-3 h-3 border border-grey-container rounded-sm hover:border-accent/50 cursor-pointer"></div>
+                  <div className="w-3 h-3 border border-grey-container rounded-sm hover:border-accent/50 cursor-pointer"></div>
+                  <div className="w-3 h-3 border border-grey-container rounded-sm hover:border-accent/50 cursor-pointer"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
