@@ -105,7 +105,7 @@ export default function BookingForm() {
 
         <div className="grid lg:grid-cols-12 gap-8">
           {/* Left Panel - Event & Time Details */}
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-4 animate-in slide-in-from-left-8 duration-500">
             <div className="bg-white rounded-lg p-6 shadow-sm border border-grey-container sticky top-8">
               <h2 className="text-xl font-semibold text-heading mb-3">
                 {eventType.title}
