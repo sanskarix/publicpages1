@@ -74,8 +74,8 @@ export default function BookingCalendar() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gradient-start via-gradient-mid to-gradient-end">
-      <div className="max-w-7xl mx-auto px-6 py-8">
+    <div className="min-h-screen bg-white">
+      <div className="max-w-6xl mx-auto px-4 py-6">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <Link to="/" className="p-2 hover:bg-white/50 rounded-lg transition-colors">
@@ -94,9 +94,9 @@ export default function BookingCalendar() {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-8">
+        <div className="grid lg:grid-cols-3 gap-6">
           {/* Left Panel - Event Details */}
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-1">
             <div className="bg-white rounded-lg p-6 shadow-sm border border-grey-container sticky top-8">
               <h2 className="text-xl font-semibold text-heading mb-3">
                 {eventType.title}
@@ -149,7 +149,7 @@ export default function BookingCalendar() {
           </div>
 
           {/* Right Panel - Calendar */}
-          <div className="lg:col-span-8">
+          <div className="lg:col-span-2 relative">
             <div className="bg-white rounded-lg shadow-sm border border-grey-container">
               {/* View Switcher */}
               <div className="flex items-center justify-between p-6 border-b border-grey-container">
