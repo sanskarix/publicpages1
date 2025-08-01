@@ -39,7 +39,7 @@ export default function BookingConfirmation() {
 
   if (!eventType || !selectedDate || !timeParam || !nameParam || !emailParam) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gradient-start via-gradient-mid to-gradient-end flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-heading mb-4">Invalid confirmation link</h1>
           <Link to="/" className="text-accent hover:underline">
@@ -59,47 +59,58 @@ export default function BookingConfirmation() {
   })();
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-2xl mx-auto px-6 py-12">
+    <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="max-w-lg mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
-          <Link to="/" className="p-2 hover:bg-white/50 rounded-lg transition-colors">
+          <Link to="/" className="p-2 hover:bg-grey-container/50 rounded-lg transition-colors">
             <ArrowLeft className="w-5 h-5 text-body-text" />
           </Link>
           <span className="text-sm text-secondary-text">Back to bookings</span>
         </div>
 
         {/* Success Card */}
-        <div className="bg-white rounded-lg p-8 shadow-sm border border-grey-container text-center animate-in zoom-in-50 duration-500">
+        <div className="bg-white rounded-xl p-8 shadow-lg border border-grey-container text-center">
           {/* Success Icon */}
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-6 animate-in zoom-in-95 duration-700 delay-300">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-green-50 rounded-full mb-6 animate-in zoom-in-95 duration-700 delay-300">
             <Check className="w-8 h-8 text-green-600 animate-in zoom-in-50 duration-500 delay-500" />
           </div>
 
           {/* Success Message */}
-          <h1 className="text-2xl font-bold text-heading mb-4">
-            This meeting is scheduled
+          <h1 className="text-2xl font-bold text-heading mb-3">
+            Meeting Scheduled!
           </h1>
           
           <p className="text-body-text mb-8 leading-relaxed">
-            We sent an email with a calendar invitation with the details to everyone.
+            A calendar invite has been sent to all participants.
           </p>
 
           {/* Meeting Details */}
-          <div className="space-y-6 text-left bg-grey-container/30 rounded-lg p-6 mb-8">
-            <div className="flex gap-4">
-              <div className="w-16 text-sm font-medium text-secondary-text">What</div>
+          <div className="space-y-6 text-left bg-gradient-to-br from-grey-container/30 to-grey-container/10 rounded-xl p-6 mb-8">
+            {/* Meeting Title */}
+            <div className="flex items-start gap-4">
+              <div className="w-8 h-8 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Calendar className="w-4 h-4 text-accent" />
+              </div>
               <div className="flex-1">
-                <p className="font-medium text-heading">
-                  {eventType.title} between Sanskar Yadav and {nameParam}
+                <h3 className="text-sm font-medium text-secondary-text mb-1">Meeting Title</h3>
+                <p className="font-semibold text-heading text-lg">
+                  {eventType.title}
+                </p>
+                <p className="text-sm text-body-text mt-1">
+                  with Sanskar Yadav and {nameParam}
                 </p>
               </div>
             </div>
 
-            <div className="flex gap-4">
-              <div className="w-16 text-sm font-medium text-secondary-text">When</div>
+            {/* Time */}
+            <div className="flex items-start gap-4">
+              <div className="w-8 h-8 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Clock className="w-4 h-4 text-accent" />
+              </div>
               <div className="flex-1">
-                <p className="font-medium text-heading">
+                <h3 className="text-sm font-medium text-secondary-text mb-1">Time</h3>
+                <p className="font-semibold text-heading">
                   {selectedDate.toLocaleDateString("en-US", { 
                     weekday: "long", 
                     year: "numeric", 
@@ -107,89 +118,75 @@ export default function BookingConfirmation() {
                     day: "numeric" 
                   })}
                 </p>
-                <p className="text-sm text-secondary-text">
+                <p className="text-sm text-body-text">
                   {timeParam} - {endTime} (India Standard Time)
                 </p>
               </div>
             </div>
 
-            <div className="flex gap-4">
-              <div className="w-16 text-sm font-medium text-secondary-text">Who</div>
-              <div className="flex-1 space-y-2">
-                <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 bg-accent text-white rounded-full flex items-center justify-center text-xs font-bold">
-                    S
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-heading">Sanskar Yadav</p>
-                    <p className="text-xs text-secondary-text">sanskar@gmail.com</p>
-                  </div>
-                  <span className="text-xs text-secondary-text ml-auto">Host</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 bg-secondary text-body-text rounded-full flex items-center justify-center text-xs font-bold">
-                    {nameParam.charAt(0).toUpperCase()}
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-heading">{nameParam}</p>
-                    <p className="text-xs text-secondary-text">{emailParam}</p>
-                  </div>
-                </div>
+            {/* Location */}
+            <div className="flex items-start gap-4">
+              <div className="w-8 h-8 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                <MapPin className="w-4 h-4 text-accent" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-sm font-medium text-secondary-text mb-1">Location</h3>
+                <p className="font-semibold text-heading flex items-center gap-2">
+                  Google Meet
+                </p>
+                <p className="text-sm text-body-text">
+                  Meeting link will be shared via email
+                </p>
               </div>
             </div>
+          </div>
 
-            <div className="flex gap-4">
-              <div className="w-16 text-sm font-medium text-secondary-text">Where</div>
-              <div className="flex-1">
-                <p className="font-medium text-heading flex items-center gap-2">
-                  Google Meet 
-                  <svg className="w-4 h-4 text-blue-500" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H6v-1.5c0-2 4-3 6-3s6 1 6 3V18z"/>
-                  </svg>
-                </p>
+          {/* Participants */}
+          <div className="mb-8">
+            <h3 className="text-sm font-medium text-secondary-text mb-3 text-left">Participants</h3>
+            <div className="space-y-2">
+              <div className="flex items-center gap-3 bg-grey-container/30 rounded-lg p-3">
+                <div className="w-8 h-8 bg-accent text-white rounded-full flex items-center justify-center text-sm font-bold">
+                  S
+                </div>
+                <div className="flex-1 text-left">
+                  <p className="text-sm font-medium text-heading">Sanskar Yadav</p>
+                  <p className="text-xs text-secondary-text">sanskar@gmail.com</p>
+                </div>
+                <span className="text-xs text-accent font-medium">Host</span>
+              </div>
+              <div className="flex items-center gap-3 bg-grey-container/30 rounded-lg p-3">
+                <div className="w-8 h-8 bg-secondary text-body-text rounded-full flex items-center justify-center text-sm font-bold">
+                  {nameParam.charAt(0).toUpperCase()}
+                </div>
+                <div className="flex-1 text-left">
+                  <p className="text-sm font-medium text-heading">{nameParam}</p>
+                  <p className="text-xs text-secondary-text">{emailParam}</p>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Action Buttons */}
           <div className="space-y-4">
-            <p className="text-sm text-secondary-text">
-              Need to make a change?{" "}
-              <button className="text-accent hover:underline">Reschedule</button>
-              {" "}or{" "}
-              <button className="text-accent hover:underline">Cancel</button>
-            </p>
-
-            {/* Calendar Integration */}
-            <div className="flex justify-center gap-2">
-              <Button variant="outline" size="sm" className="border-grey-container hover:bg-grey-container">
-                <Calendar className="w-4 h-4 mr-2" />
-                Add to calendar
+            <Button className="w-full bg-accent hover:bg-accent/90 text-white">
+              <Calendar className="w-4 h-4 mr-2" />
+              Add to Calendar
+            </Button>
+            
+            <div className="flex gap-2">
+              <Button variant="outline" className="flex-1 border-grey-container hover:bg-grey-container">
+                Reschedule
               </Button>
-              <Button variant="outline" size="sm" className="border-grey-container hover:bg-grey-container">
-                <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-                </svg>
-                G
-              </Button>
-              <Button variant="outline" size="sm" className="border-grey-container hover:bg-grey-container">
-                <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-                </svg>
-                O
-              </Button>
-              <Button variant="outline" size="sm" className="border-grey-container hover:bg-grey-container">
-                <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                </svg>
-                Y
+              <Button variant="outline" className="flex-1 border-grey-container hover:bg-grey-container text-destructive hover:text-destructive">
+                Cancel
               </Button>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-8">
           <div className="inline-flex items-center gap-2 text-accent font-medium">
             <div className="w-6 h-6 bg-accent rounded flex items-center justify-center">
               <span className="text-white text-xs font-bold">O</span>
