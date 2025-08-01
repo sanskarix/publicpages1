@@ -46,6 +46,7 @@ export default function BookingCalendar() {
   const [selectedView, setSelectedView] = useState<ViewType>("monthly");
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [selectedDuration, setSelectedDuration] = useState<string>("15m");
 
   const eventType = eventId ? eventTypes[eventId as keyof typeof eventTypes] : null;
 
