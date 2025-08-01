@@ -70,10 +70,10 @@ export default function BookingConfirmation() {
         </div>
 
         {/* Success Card */}
-        <div className="bg-white rounded-lg p-8 shadow-sm border border-grey-container text-center">
+        <div className="bg-white rounded-lg p-8 shadow-sm border border-grey-container text-center animate-in zoom-in-50 duration-500">
           {/* Success Icon */}
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-6">
-            <Check className="w-8 h-8 text-green-600" />
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-6 animate-in zoom-in-95 duration-700 delay-300">
+            <Check className="w-8 h-8 text-green-600 animate-in zoom-in-50 duration-500 delay-500" />
           </div>
 
           {/* Success Message */}
