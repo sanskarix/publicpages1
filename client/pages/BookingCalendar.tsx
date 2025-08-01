@@ -152,24 +152,24 @@ export default function BookingCalendar() {
           <div className="lg:col-span-2 relative">
             <div className="bg-white rounded-lg shadow-sm border border-grey-container">
               {/* View Switcher */}
-              <div className="flex items-center justify-between p-6 border-b border-grey-container">
-                <h3 className="font-semibold text-heading">Select a Date & Time</h3>
+              <div className="flex items-center justify-between p-4 border-b border-grey-container">
+                <h3 className="font-medium text-heading">Select a Date & Time</h3>
                 <div className="flex gap-1 bg-grey-container rounded-lg p-1">
                   <Button
-                    variant={selectedView === "monthly" ? "default" : "ghost"}
+                    variant="ghost"
                     size="sm"
                     onClick={() => setSelectedView("monthly")}
-                    className={selectedView === "monthly" ? "bg-accent text-white" : "text-secondary-text hover:text-body-text"}
+                    className={selectedView === "monthly" ? "bg-accent text-white hover:bg-accent/90" : "text-secondary-text hover:text-body-text"}
                   >
-                    12h
+                    Monthly
                   </Button>
                   <Button
-                    variant={selectedView === "weekly" ? "default" : "ghost"}
+                    variant="ghost"
                     size="sm"
                     onClick={() => setSelectedView("weekly")}
-                    className={selectedView === "weekly" ? "bg-accent text-white" : "text-secondary-text hover:text-body-text"}
+                    className={selectedView === "weekly" ? "bg-accent text-white hover:bg-accent/90" : "text-secondary-text hover:text-body-text"}
                   >
-                    24h
+                    Weekly
                   </Button>
                 </div>
               </div>
