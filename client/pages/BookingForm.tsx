@@ -234,8 +234,65 @@ export default function BookingForm() {
                 </div>
 
                 <div className="space-y-4">
-                  <div className="flex items-center gap-2">
-                    <span className="text-secondary-text text-sm">Add guests</span>
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => setShowGuestForm(!showGuestForm)}
+                      className="flex items-center gap-2 text-secondary-text text-sm hover:text-accent transition-colors"
+                    >
+                      <span>Add guests</span>
+                    </button>
+
+                    {showGuestForm && (
+                      <div className="mt-3 space-y-2">
+                        <div className="flex gap-2">
+                          <Input
+                            placeholder="Guest email"
+                            onKeyPress={(e) => {
+                              if (e.key === 'Enter') {
+                                const target = e.target as HTMLInputElement;
+                                if (target.value.trim()) {
+                                  setGuests([...guests, target.value.trim()]);
+                                  target.value = '';
+                                }
+                              }
+                            }}
+                            className="flex-1 text-sm border-grey-container focus:border-accent focus:ring-accent"
+                          />
+                          <Button
+                            type="button"
+                            size="sm"
+                            onClick={(e) => {
+                              const input = (e.target as HTMLElement).parentElement?.querySelector('input') as HTMLInputElement;
+                              if (input?.value.trim()) {
+                                setGuests([...guests, input.value.trim()]);
+                                input.value = '';
+                              }
+                            }}
+                            className="bg-accent text-white hover:bg-accent/90"
+                          >
+                            +
+                          </Button>
+                        </div>
+
+                        {guests.length > 0 && (
+                          <div className="space-y-1">
+                            {guests.map((guest, index) => (
+                              <div key={index} className="flex items-center justify-between bg-grey-container rounded px-2 py-1">
+                                <span className="text-sm text-body-text">{guest}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => setGuests(guests.filter((_, i) => i !== index))}
+                                  className="text-secondary-text hover:text-destructive text-sm"
+                                >
+                                  ×
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                   
                   <div className="flex items-start gap-3">
