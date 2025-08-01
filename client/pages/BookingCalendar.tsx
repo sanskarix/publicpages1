@@ -175,7 +175,7 @@ export default function BookingCalendar() {
               </div>
 
               {/* Calendar Content */}
-              <div className="p-6">
+              <div className="p-4">
                 {selectedView === "monthly" && (
                   <MonthlyView onTimeSelect={handleTimeSelect} />
                 )}
