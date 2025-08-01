@@ -57,6 +57,14 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Custom app colors
+        "gradient-start": "hsl(var(--gradient-start))",
+        "gradient-mid": "hsl(var(--gradient-mid))",
+        "gradient-end": "hsl(var(--gradient-end))",
+        "heading": "hsl(var(--heading))",
+        "body-text": "hsl(var(--body-text))",
+        "secondary-text": "hsl(var(--secondary-text))",
+        "grey-container": "hsl(var(--grey-container))",
       },
       borderRadius: {
         lg: "var(--radius)",
