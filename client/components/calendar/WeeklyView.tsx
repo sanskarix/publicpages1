@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Calendar } from "lucide-react";
 
 interface WeeklyViewProps {
   onTimeSelect: (date: Date, time: string) => void;
@@ -14,6 +14,7 @@ const timeSlots = [
 export function WeeklyView({ onTimeSelect }: WeeklyViewProps) {
   const [currentWeek, setCurrentWeek] = useState(new Date(2025, 6, 31)); // July 31, 2025
   const [selectedSlot, setSelectedSlot] = useState<{date: Date, time: string} | null>(null);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const getWeekDays = (startDate: Date) => {
     const days = [];
@@ -60,13 +61,34 @@ export function WeeklyView({ onTimeSelect }: WeeklyViewProps) {
            selectedSlot?.time === time;
   };
 
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newDate = new Date(e.target.value);
+    setCurrentWeek(newDate);
+    setShowDatePicker(false);
+    setSelectedSlot(null);
+  };
+
   return (
     <div className="space-y-4">
       {/* Week Header */}
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium text-heading">
-          {formatWeekRange()}
-        </h3>
+        <div className="relative">
+          <button
+            onClick={() => setShowDatePicker(!showDatePicker)}
+            className="flex items-center gap-2 text-lg font-medium text-heading hover:text-accent transition-colors"
+          >
+            {formatWeekRange()}
+            <Calendar className="w-4 h-4" />
+          </button>
+          {showDatePicker && (
+            <input
+              type="date"
+              onChange={handleDateChange}
+              className="absolute top-8 left-0 border border-grey-container rounded-md px-2 py-1 text-sm bg-white shadow-lg z-10"
+              defaultValue={currentWeek.toISOString().split('T')[0]}
+            />
+          )}
+        </div>
         <div className="flex gap-1">
           <Button
             variant="ghost"
@@ -116,23 +138,21 @@ export function WeeklyView({ onTimeSelect }: WeeklyViewProps) {
                   key={`${day.toDateString()}-${time}`}
                   className="border-l border-grey-container relative h-10"
                 >
-                  {/* Only show available slots for specific days and times */}
-                  {(dayIndex === 4 && (time === "16:00" || time === "17:00")) && (
-                    <Button
-                      variant="ghost"
-                      className={`w-full h-full rounded-none text-xs ${
-                        isSlotSelected(day, time)
-                          ? "bg-accent text-white hover:bg-accent/90"
-                          : "hover:bg-accent/10 text-body-text"
-                      }`}
-                      onClick={() => handleTimeSlotClick(day, time)}
-                    >
-                      Available
-                    </Button>
-                  )}
-                  {/* Show busy indicator for some slots */}
+                  {/* Available time slots - make all clickable */}
+                  <Button
+                    variant="ghost"
+                    className={`w-full h-full rounded-none text-xs transition-colors ${
+                      isSlotSelected(day, time)
+                        ? "bg-accent text-white hover:bg-accent/90"
+                        : "hover:bg-accent/10 text-transparent hover:text-body-text"
+                    }`}
+                    onClick={() => handleTimeSlotClick(day, time)}
+                  >
+                    {isSlotSelected(day, time) ? time : ""}
+                  </Button>
+                  {/* Show busy indicator for some example slots */}
                   {(dayIndex === 4 && time === "15:00") && (
-                    <div className="h-full bg-gray-100 border-l-2 border-gray-300 flex items-center px-2">
+                    <div className="absolute inset-0 bg-gray-100 border-l-2 border-gray-300 flex items-center px-2 pointer-events-none">
                       <div className="text-xs text-gray-500 truncate">Busy</div>
                     </div>
                   )}
