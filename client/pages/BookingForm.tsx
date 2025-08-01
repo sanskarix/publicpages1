@@ -44,6 +44,8 @@ export default function BookingForm() {
     notes: "",
     agreeToTerms: false
   });
+  const [guests, setGuests] = useState<string[]>([]);
+  const [showGuestForm, setShowGuestForm] = useState(false);
 
   const eventType = eventId ? eventTypes[eventId as keyof typeof eventTypes] : null;
   const dateParam = searchParams.get("date");
