@@ -1,61 +1,125 @@
-import { DemoResponse } from "@shared/api";
-import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Clock, MapPin } from "lucide-react";
+
+const eventTypes = [
+  {
+    id: "product-hunt-chats",
+    title: "Product Hunt Chats",
+    description: "The essence of Product Hunt reflects in communities. Select a time suitable for you, and let's talk products!",
+    duration: "15m",
+    color: "bg-green-100 text-green-700"
+  },
+  {
+    id: "interviews", 
+    title: "Interviews",
+    description: "Let's chat about how your skills can be an asset for our team. No stress, just good vibes and great questions!",
+    duration: "30m",
+    color: "bg-blue-100 text-blue-700"
+  },
+  {
+    id: "product-demo",
+    title: "Product Demo",
+    description: "Product innovation in action! Reserve a time for a personalized demo of our next-gen scheduler.",
+    duration: "30m", 
+    color: "bg-purple-100 text-purple-700"
+  },
+  {
+    id: "everything-else",
+    title: "Everything Else",
+    description: "Open Agenda! Let's brainstorm over coffee or talk about your favorite singer. Whatever it is, I'm all ears! 😊",
+    duration: "15m",
+    color: "bg-orange-100 text-orange-700"
+  },
+  {
+    id: "recurring-event", 
+    title: "Recurring Event",
+    description: "Testing out the Recurring Meetup",
+    duration: "15m",
+    color: "bg-pink-100 text-pink-700",
+    recurring: true
+  }
+];
 
 export default function Index() {
-  const [exampleFromServer, setExampleFromServer] = useState("");
-  // Fetch users on component mount
-  useEffect(() => {
-    fetchDemo();
-  }, []);
-
-  // Example of how to fetch data from the server (if needed)
-  const fetchDemo = async () => {
-    try {
-      const response = await fetch("/api/demo");
-      const data = (await response.json()) as DemoResponse;
-      setExampleFromServer(data.message);
-    } catch (error) {
-      console.error("Error fetching hello:", error);
-    }
-  };
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-      <div className="text-center">
-        {/* TODO: FUSION_GENERATION_APP_PLACEHOLDER replace everything here with the actual app! */}
-        <h1 className="text-2xl font-semibold text-slate-800 flex items-center justify-center gap-3">
-          <svg
-            className="animate-spin h-8 w-8 text-slate-400"
-            viewBox="0 0 50 50"
-          >
-            <circle
-              className="opacity-30"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
+    <div className="min-h-screen bg-gradient-to-br from-gradient-start via-gradient-mid to-gradient-end">
+      <div className="max-w-2xl mx-auto px-6 py-12">
+        {/* Profile Section */}
+        <div className="text-center mb-12">
+          <div className="relative inline-block mb-6">
+            <img 
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
+              alt="Sanskar Yadav"
+              className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
             />
-            <circle
-              className="text-slate-600"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-              strokeDasharray="100"
-              strokeDashoffset="75"
-            />
-          </svg>
-          Generating your app...
-        </h1>
-        <p className="mt-4 text-slate-600 max-w-md">
-          Watch the chat on the left for updates that might need your attention
-          to finish generating
-        </p>
-        <p className="mt-4 hidden max-w-md">{exampleFromServer}</p>
+          </div>
+          
+          <h1 className="text-3xl font-bold text-heading mb-2">
+            Sanskar Yadav
+          </h1>
+          
+          <p className="text-secondary-text text-lg mb-8">
+            Head of Growth @OneHash | Building the craziest tools on the internet 🚀
+          </p>
+        </div>
+
+        {/* Event Types */}
+        <div className="space-y-4">
+          {eventTypes.map((eventType) => (
+            <Link 
+              key={eventType.id}
+              to={`/book/${eventType.id}`}
+              className="block group"
+            >
+              <div className="bg-white rounded-lg p-6 shadow-sm border border-grey-container hover:shadow-md transition-all duration-200 hover:border-accent/20 group-hover:scale-[1.01]">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <h3 className="text-lg font-semibold text-heading">
+                        {eventType.title}
+                      </h3>
+                      {eventType.recurring && (
+                        <span className="text-xs px-2 py-1 bg-accent/10 text-accent rounded-full">
+                          Repeats up to 12 times
+                        </span>
+                      )}
+                    </div>
+                    
+                    <p className="text-body-text text-sm mb-4 leading-relaxed">
+                      {eventType.description}
+                    </p>
+                    
+                    <div className="flex items-center gap-4 text-secondary-text text-sm">
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        <span>{eventType.duration}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <MapPin className="w-4 h-4" />
+                        <span>Google Meet</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="ml-4">
+                    <div className={`w-3 h-3 rounded-full ${eventType.color.split(' ')[0]}`}></div>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <div className="text-center mt-12">
+          <div className="inline-flex items-center gap-2 text-accent font-medium">
+            <div className="w-6 h-6 bg-accent rounded flex items-center justify-center">
+              <span className="text-white text-xs font-bold">O</span>
+            </div>
+            OneHash
+          </div>
+        </div>
       </div>
     </div>
   );
