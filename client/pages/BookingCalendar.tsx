@@ -191,29 +191,6 @@ export default function BookingCalendar() {
           {/* Right Panel - Calendar */}
           <div className="lg:col-span-2 relative">
             <div className="bg-white rounded-lg shadow-sm border border-grey-container">
-              {/* View Switcher */}
-              <div className="flex items-center justify-between p-4 border-b border-grey-container">
-                <h3 className="font-medium text-heading">Select a Date & Time</h3>
-                <div className="flex gap-1 bg-grey-container rounded-lg p-1">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setSelectedView("monthly")}
-                    className={selectedView === "monthly" ? "bg-accent text-white hover:bg-accent/90" : "text-secondary-text hover:text-body-text"}
-                  >
-                    Monthly
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setSelectedView("weekly")}
-                    className={selectedView === "weekly" ? "bg-accent text-white hover:bg-accent/90" : "text-secondary-text hover:text-body-text"}
-                  >
-                    Weekly
-                  </Button>
-                </div>
-              </div>
-
               {/* Calendar Content */}
               <div className="p-4">
                 {selectedView === "monthly" && (
