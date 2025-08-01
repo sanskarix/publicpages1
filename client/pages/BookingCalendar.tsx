@@ -107,10 +107,27 @@ export default function BookingCalendar() {
                 {eventType.description}
               </p>
               
-              <div className="space-y-3">
-                <div className="flex items-center gap-3 text-secondary-text">
-                  <Clock className="w-4 h-4" />
-                  <span className="text-sm">{eventType.duration}</span>
+              <div className="space-y-4">
+                <div>
+                  <div className="flex items-center gap-3 text-secondary-text mb-2">
+                    <Clock className="w-4 h-4" />
+                    <span className="text-sm font-medium">Duration</span>
+                  </div>
+                  <div className="flex gap-2 flex-wrap">
+                    {["15m", "30m", "45m", "60m"].map((duration) => (
+                      <button
+                        key={duration}
+                        onClick={() => setSelectedDuration(duration)}
+                        className={`px-3 py-1 text-sm rounded-md transition-colors ${
+                          selectedDuration === duration
+                            ? "bg-accent text-white"
+                            : "bg-grey-container text-body-text hover:bg-grey-container/80"
+                        }`}
+                      >
+                        {duration}
+                      </button>
+                    ))}
+                  </div>
                 </div>
                 <div className="flex items-center gap-3 text-secondary-text">
                   <MapPin className="w-4 h-4" />
