@@ -44,9 +44,9 @@ export function WeeklyView({ onTimeSelect }: WeeklyViewProps) {
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     
     if (start.getMonth() === end.getMonth()) {
-      return `${monthNames[start.getMonth()]} ${start.getDate()} - ${end.getDate()}, ${start.getFullYear()}`;
+      return `${start.getDate()} - ${end.getDate()} ${monthNames[start.getMonth()]} ${start.getFullYear()}`;
     } else {
-      return `${monthNames[start.getMonth()]} ${start.getDate()} - ${monthNames[end.getMonth()]} ${end.getDate()}, ${start.getFullYear()}`;
+      return `${start.getDate()} ${monthNames[start.getMonth()]} - ${end.getDate()} ${monthNames[end.getMonth()]} ${start.getFullYear()}`;
     }
   };
 
@@ -64,7 +64,7 @@ export function WeeklyView({ onTimeSelect }: WeeklyViewProps) {
     <div className="space-y-4">
       {/* Week Header */}
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-heading">
+        <h3 className="text-lg font-medium text-heading">
           {formatWeekRange()}
         </h3>
         <div className="flex gap-1">
@@ -72,7 +72,7 @@ export function WeeklyView({ onTimeSelect }: WeeklyViewProps) {
             variant="ghost"
             size="sm"
             onClick={() => navigateWeek('prev')}
-            className="h-8 w-8 p-0 hover:bg-grey-container"
+            className="h-7 w-7 p-0 hover:bg-grey-container"
           >
             <ChevronLeft className="w-4 h-4" />
           </Button>
@@ -80,7 +80,7 @@ export function WeeklyView({ onTimeSelect }: WeeklyViewProps) {
             variant="ghost"
             size="sm"
             onClick={() => navigateWeek('next')}
-            className="h-8 w-8 p-0 hover:bg-grey-container"
+            className="h-7 w-7 p-0 hover:bg-grey-container"
           >
             <ChevronRight className="w-4 h-4" />
           </Button>
@@ -90,46 +90,49 @@ export function WeeklyView({ onTimeSelect }: WeeklyViewProps) {
       {/* Calendar Grid */}
       <div className="border border-grey-container rounded-lg overflow-hidden">
         {/* Day Headers */}
-        <div className="grid grid-cols-8 border-b border-grey-container bg-grey-container/30">
-          <div className="p-3 text-xs font-medium text-secondary-text"></div>
+        <div className="grid grid-cols-8 border-b border-grey-container bg-grey-container/20">
+          <div className="p-2 text-xs font-medium text-secondary-text"></div>
           {weekDays.map((day, index) => (
-            <div key={index} className="p-3 text-center border-l border-grey-container">
-              <div className="text-xs font-medium text-secondary-text mb-1">
-                {dayNames[index]} {day.getDate().toString().padStart(2, '0')}
+            <div key={index} className="p-2 text-center border-l border-grey-container">
+              <div className="text-xs font-medium text-secondary-text">
+                {dayNames[index]}
+              </div>
+              <div className="text-xs text-body-text mt-1">
+                {day.getDate().toString().padStart(2, '0')}
               </div>
             </div>
           ))}
         </div>
 
         {/* Time Grid */}
-        <div className="max-h-96 overflow-y-auto">
+        <div className="max-h-80 overflow-y-auto">
           {timeSlots.map((time) => (
             <div key={time} className="grid grid-cols-8 border-b border-grey-container last:border-b-0">
-              <div className="p-3 text-xs text-secondary-text bg-grey-container/10 border-r border-grey-container">
+              <div className="p-2 text-xs text-secondary-text bg-grey-container/10 border-r border-grey-container">
                 {time}
               </div>
               {weekDays.map((day, dayIndex) => (
                 <div 
                   key={`${day.toDateString()}-${time}`}
-                  className="border-l border-grey-container relative"
+                  className="border-l border-grey-container relative h-10"
                 >
                   {/* Only show available slots for specific days and times */}
                   {(dayIndex === 4 && (time === "16:00" || time === "17:00")) && (
                     <Button
                       variant="ghost"
-                      className={`w-full h-12 rounded-none text-xs ${
+                      className={`w-full h-full rounded-none text-xs ${
                         isSlotSelected(day, time)
                           ? "bg-accent text-white hover:bg-accent/90"
                           : "hover:bg-accent/10 text-body-text"
                       }`}
                       onClick={() => handleTimeSlotClick(day, time)}
                     >
-                      {time}
+                      Available
                     </Button>
                   )}
                   {/* Show busy indicator for some slots */}
                   {(dayIndex === 4 && time === "15:00") && (
-                    <div className="h-12 bg-gray-100 border-l-2 border-gray-300 flex items-center px-2">
+                    <div className="h-full bg-gray-100 border-l-2 border-gray-300 flex items-center px-2">
                       <div className="text-xs text-gray-500 truncate">Busy</div>
                     </div>
                   )}
@@ -137,18 +140,6 @@ export function WeeklyView({ onTimeSelect }: WeeklyViewProps) {
               ))}
             </div>
           ))}
-        </div>
-      </div>
-
-      {/* Legend */}
-      <div className="flex items-center gap-4 text-xs text-secondary-text">
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 bg-accent rounded"></div>
-          <span>Available</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 bg-gray-300 rounded"></div>
-          <span>Busy</span>
         </div>
       </div>
     </div>
