@@ -101,15 +101,8 @@ export default function BookingForm() {
             <ArrowLeft className="w-5 h-5 text-body-text" />
           </Link>
 
-          <div className="flex items-center gap-3">
-            <img
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face"
-              alt="Sanskar Yadav"
-              className="w-10 h-10 rounded-full object-cover"
-            />
-            <div>
-              <h1 className="text-xl font-semibold text-heading">Sanskar Yadav</h1>
-            </div>
+          <div>
+            <h1 className="text-xl font-semibold text-heading">Sanskar Yadav</h1>
           </div>
         </div>
 
