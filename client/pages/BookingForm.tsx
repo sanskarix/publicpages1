@@ -81,6 +81,14 @@ export default function BookingForm() {
     }));
   };
 
+  const addGuest = () => {
+    const input = document.getElementById('guest-email-input') as HTMLInputElement;
+    if (input?.value.trim()) {
+      setGuests([...guests, input.value.trim()]);
+      input.value = '';
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white flex items-center justify-center">
       <div className="max-w-4xl mx-auto px-4 py-6 w-full">
