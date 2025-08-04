@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Clock, MapPin } from "lucide-react";
+import { Clock, MapPin, MessageCircle, Users, Monitor, Coffee, Calendar } from "lucide-react";
 
 const eventTypes = [
   {
