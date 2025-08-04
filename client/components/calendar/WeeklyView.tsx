@@ -13,14 +13,14 @@ const timeSlots = [
 ];
 
 export function WeeklyView({ onTimeSelect, onConfirm }: WeeklyViewProps) {
-  const [currentWeek, setCurrentWeek] = useState(new Date(2025, 6, 31)); // July 31, 2025
+  const [currentWeek, setCurrentWeek] = useState(new Date());
   const [selectedSlot, setSelectedSlot] = useState<{ date: Date, time: string } | null>(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const getWeekDays = (startDate: Date) => {
     const days = [];
     const start = new Date(startDate);
-    start.setDate(start.getDate() - start.getDay()); // Start from Sunday
+    start.setDate(start.getDate() - start.getDay());
 
     for (let i = 0; i < 7; i++) {
       const day = new Date(start);
@@ -71,7 +71,6 @@ export function WeeklyView({ onTimeSelect, onConfirm }: WeeklyViewProps) {
 
   return (
     <div className="space-y-4">
-      {/* Week Header */}
       <div className="flex items-center justify-between">
         <div className="relative">
           <button
@@ -109,9 +108,7 @@ export function WeeklyView({ onTimeSelect, onConfirm }: WeeklyViewProps) {
           </Button>
         </div>
       </div>
-      {/* Calendar Grid */}
       <div className="border border-grey-container rounded-lg overflow-hidden">
-        {/* Day Headers */}
         <div className="grid grid-cols-8 border-b border-grey-container bg-grey-container/20">
           <div className="p-2 text-xs font-medium text-secondary-text"></div>
           {weekDays.map((day, index) => (
@@ -125,7 +122,6 @@ export function WeeklyView({ onTimeSelect, onConfirm }: WeeklyViewProps) {
             </div>
           ))}
         </div>
-        {/* Time Grid */}
         <div className="max-h-80 overflow-y-auto">
           {timeSlots.map((time) => (
             <div key={time} className="grid grid-cols-8 border-b border-grey-container last:border-b-0">
@@ -137,7 +133,6 @@ export function WeeklyView({ onTimeSelect, onConfirm }: WeeklyViewProps) {
                   key={`${day.toDateString()}-${time}`}
                   className="border-l border-grey-container relative h-10"
                 >
-                  {/* Available time slots - make all clickable */}
                   <Button
                     variant="ghost"
                     className={`w-full h-full rounded-none text-xs transition-colors ${isSlotSelected(day, time)
@@ -148,7 +143,6 @@ export function WeeklyView({ onTimeSelect, onConfirm }: WeeklyViewProps) {
                   >
                     {isSlotSelected(day, time) ? time : ""}
                   </Button>
-                  {/* Show busy indicator for some example slots */}
                   {(dayIndex === 4 && time === "15:00") && (
                     <div className="absolute inset-0 bg-gray-100 border-l-2 border-gray-300 flex items-center px-2 pointer-events-none">
                       <div className="text-xs text-gray-500 truncate">Busy</div>
