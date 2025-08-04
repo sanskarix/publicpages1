@@ -82,8 +82,8 @@ export default function BookingCalendar() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center">
-      <div className="max-w-6xl mx-auto px-4 py-6 w-full">
+    <div className="min-h-screen bg-white">
+      <div className="max-w-6xl mx-auto px-4 py-6">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
             <Link
