@@ -243,13 +243,15 @@ export default function BookingForm() {
 
                 <div className="space-y-4">
                   <div>
-                    <button
+                    <Button
                       type="button"
+                      variant="outline"
+                      size="sm"
                       onClick={() => setShowGuestForm(!showGuestForm)}
-                      className="flex items-center gap-2 text-secondary-text text-sm hover:text-accent transition-colors"
+                      className="border-grey-container text-secondary-text hover:text-accent hover:border-accent"
                     >
-                      <span>Add guests</span>
-                    </button>
+                      Add guests
+                    </Button>
 
                     {showGuestForm && (
                       <div className="mt-3 space-y-2">
