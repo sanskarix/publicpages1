@@ -254,17 +254,14 @@ export default function BookingForm() {
                     </Button>
 
                     {showGuestForm && (
-                      <div className="mt-3 space-y-2">
+                      <div className="mt-3 space-y-2 animate-in slide-in-from-top-4 duration-300">
                         <div className="flex gap-2">
                           <Input
+                            id="guest-email-input"
                             placeholder="Guest email"
                             onKeyPress={(e) => {
                               if (e.key === 'Enter') {
-                                const target = e.target as HTMLInputElement;
-                                if (target.value.trim()) {
-                                  setGuests([...guests, target.value.trim()]);
-                                  target.value = '';
-                                }
+                                addGuest();
                               }
                             }}
                             className="flex-1 text-sm border-grey-container focus:border-accent focus:ring-accent"
@@ -272,13 +269,7 @@ export default function BookingForm() {
                           <Button
                             type="button"
                             size="sm"
-                            onClick={(e) => {
-                              const input = (e.target as HTMLElement).parentElement?.querySelector('input') as HTMLInputElement;
-                              if (input?.value.trim()) {
-                                setGuests([...guests, input.value.trim()]);
-                                input.value = '';
-                              }
-                            }}
+                            onClick={addGuest}
                             className="bg-accent text-white hover:bg-accent/90"
                           >
                             +
@@ -288,7 +279,7 @@ export default function BookingForm() {
                         {guests.length > 0 && (
                           <div className="space-y-1">
                             {guests.map((guest, index) => (
-                              <div key={index} className="flex items-center justify-between bg-grey-container rounded px-2 py-1">
+                              <div key={index} className="flex items-center justify-between bg-grey-container rounded px-2 py-1 animate-in slide-in-from-left-4 duration-200">
                                 <span className="text-sm text-body-text">{guest}</span>
                                 <button
                                   type="button"
