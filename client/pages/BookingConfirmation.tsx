@@ -70,18 +70,18 @@ export default function BookingConfirmation() {
         </div>
 
         {/* Success Card */}
-        <div className="bg-white rounded-xl p-8 shadow-lg border border-grey-container text-center">
+        <div className="bg-white rounded-2xl p-10 shadow-xl border border-grey-container text-center">
           {/* Success Icon */}
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-green-50 rounded-full mb-6 animate-in zoom-in-95 duration-700 delay-300">
-            <Check className="w-8 h-8 text-green-600 animate-in zoom-in-50 duration-500 delay-500" />
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-green-50 rounded-full mb-8 animate-in zoom-in-95 duration-700 delay-300">
+            <Check className="w-10 h-10 text-green-600 animate-in zoom-in-50 duration-500 delay-500" />
           </div>
 
           {/* Success Message */}
-          <h1 className="text-2xl font-bold text-heading mb-3">
+          <h1 className="text-3xl font-bold text-heading mb-4">
             Meeting Scheduled!
           </h1>
 
-          <p className="text-body-text mb-8 leading-relaxed">
+          <p className="text-body-text mb-10 leading-relaxed text-lg">
             A calendar invite has been sent to all participants.
           </p>
 
