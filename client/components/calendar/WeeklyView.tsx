@@ -155,7 +155,7 @@ export function WeeklyView({ onTimeSelect, onConfirm }: WeeklyViewProps) {
         </div>
       </div>
       {selectedSlot && (
-        <div className="mt-4">
+        <div className="mt-4 animate-in slide-in-from-top-8 duration-500">
           <Button
             onClick={onConfirm}
             className="w-full bg-accent hover:bg-accent/90 text-white"
