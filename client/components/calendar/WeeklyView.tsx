@@ -8,13 +8,30 @@ interface WeeklyViewProps {
 }
 
 const timeSlots = [
-  "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00",
-  "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"
+  "8:00",
+  "9:00",
+  "10:00",
+  "11:00",
+  "12:00",
+  "13:00",
+  "14:00",
+  "15:00",
+  "16:00",
+  "17:00",
+  "18:00",
+  "19:00",
+  "20:00",
+  "21:00",
+  "22:00",
+  "23:00",
 ];
 
 export function WeeklyView({ onTimeSelect, onConfirm }: WeeklyViewProps) {
   const [currentWeek, setCurrentWeek] = useState(new Date());
-  const [selectedSlot, setSelectedSlot] = useState<{ date: Date, time: string } | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<{
+    date: Date;
+    time: string;
+  } | null>(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const getWeekDays = (startDate: Date) => {
@@ -33,9 +50,9 @@ export function WeeklyView({ onTimeSelect, onConfirm }: WeeklyViewProps) {
   const weekDays = getWeekDays(currentWeek);
   const dayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
-  const navigateWeek = (direction: 'prev' | 'next') => {
+  const navigateWeek = (direction: "prev" | "next") => {
     const newWeek = new Date(currentWeek);
-    newWeek.setDate(currentWeek.getDate() + (direction === 'next' ? 7 : -7));
+    newWeek.setDate(currentWeek.getDate() + (direction === "next" ? 7 : -7));
     setCurrentWeek(newWeek);
     setSelectedSlot(null);
   };
@@ -43,7 +60,20 @@ export function WeeklyView({ onTimeSelect, onConfirm }: WeeklyViewProps) {
   const formatWeekRange = () => {
     const start = weekDays[0];
     const end = weekDays[6];
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
 
     if (start.getMonth() === end.getMonth()) {
       return `${start.getDate()} - ${end.getDate()} ${monthNames[start.getMonth()]} ${start.getFullYear()}`;
@@ -58,8 +88,10 @@ export function WeeklyView({ onTimeSelect, onConfirm }: WeeklyViewProps) {
   };
 
   const isSlotSelected = (date: Date, time: string) => {
-    return selectedSlot?.date.toDateString() === date.toDateString() &&
-      selectedSlot?.time === time;
+    return (
+      selectedSlot?.date.toDateString() === date.toDateString() &&
+      selectedSlot?.time === time
+    );
   };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,7 +117,7 @@ export function WeeklyView({ onTimeSelect, onConfirm }: WeeklyViewProps) {
               type="date"
               onChange={handleDateChange}
               className="absolute top-8 left-0 border border-grey-container rounded-md px-2 py-1 text-sm bg-white shadow-lg z-10"
-              defaultValue={currentWeek.toISOString().split('T')[0]}
+              defaultValue={currentWeek.toISOString().split("T")[0]}
             />
           )}
         </div>
@@ -93,7 +125,7 @@ export function WeeklyView({ onTimeSelect, onConfirm }: WeeklyViewProps) {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => navigateWeek('prev')}
+            onClick={() => navigateWeek("prev")}
             className="h-7 w-7 p-0 hover:bg-grey-container"
           >
             <ChevronLeft className="w-4 h-4" />
@@ -101,7 +133,7 @@ export function WeeklyView({ onTimeSelect, onConfirm }: WeeklyViewProps) {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => navigateWeek('next')}
+            onClick={() => navigateWeek("next")}
             className="h-7 w-7 p-0 hover:bg-grey-container"
           >
             <ChevronRight className="w-4 h-4" />
@@ -112,19 +144,25 @@ export function WeeklyView({ onTimeSelect, onConfirm }: WeeklyViewProps) {
         <div className="grid grid-cols-8 border-b border-grey-container bg-grey-container/20">
           <div className="p-2 text-xs font-medium text-secondary-text"></div>
           {weekDays.map((day, index) => (
-            <div key={index} className="p-2 text-center border-l border-grey-container">
+            <div
+              key={index}
+              className="p-2 text-center border-l border-grey-container"
+            >
               <div className="text-xs font-medium text-secondary-text">
                 {dayNames[index]}
               </div>
               <div className="text-xs text-body-text mt-1">
-                {day.getDate().toString().padStart(2, '0')}
+                {day.getDate().toString().padStart(2, "0")}
               </div>
             </div>
           ))}
         </div>
         <div className="max-h-80 overflow-y-auto">
           {timeSlots.map((time) => (
-            <div key={time} className="grid grid-cols-8 border-b border-grey-container last:border-b-0">
+            <div
+              key={time}
+              className="grid grid-cols-8 border-b border-grey-container last:border-b-0"
+            >
               <div className="p-2 text-xs text-secondary-text bg-grey-container/10 border-r border-grey-container">
                 {time}
               </div>
@@ -135,15 +173,16 @@ export function WeeklyView({ onTimeSelect, onConfirm }: WeeklyViewProps) {
                 >
                   <Button
                     variant="ghost"
-                    className={`w-full h-full rounded-none text-xs transition-colors ${isSlotSelected(day, time)
+                    className={`w-full h-full rounded-none text-xs transition-colors ${
+                      isSlotSelected(day, time)
                         ? "bg-accent text-white hover:bg-accent/90"
                         : "hover:bg-accent/10 text-transparent hover:text-body-text"
-                      }`}
+                    }`}
                     onClick={() => handleTimeSlotClick(day, time)}
                   >
                     {isSlotSelected(day, time) ? time : ""}
                   </Button>
-                  {(dayIndex === 4 && time === "15:00") && (
+                  {dayIndex === 4 && time === "15:00" && (
                     <div className="absolute inset-0 bg-gray-100 border-l-2 border-gray-300 flex items-center px-2 pointer-events-none">
                       <div className="text-xs text-gray-500 truncate">Busy</div>
                     </div>

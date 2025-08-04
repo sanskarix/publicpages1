@@ -1,35 +1,45 @@
 import { useParams, useSearchParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Check, Calendar, Clock, MapPin, ArrowLeft, Users, Mail } from "lucide-react";
+import {
+  Check,
+  Calendar,
+  Clock,
+  MapPin,
+  ArrowLeft,
+  Users,
+  Mail,
+} from "lucide-react";
 
 const eventTypes = {
   "product-hunt-chats": {
     title: "Product Hunt Chats",
-    duration: "15m"
+    duration: "15m",
   },
-  "interviews": {
+  interviews: {
     title: "Interviews",
-    duration: "30m"
+    duration: "30m",
   },
   "product-demo": {
     title: "Product Demo",
-    duration: "30m"
+    duration: "30m",
   },
   "everything-else": {
     title: "Everything Else",
-    duration: "15m"
+    duration: "15m",
   },
   "recurring-event": {
     title: "Recurring Event",
-    duration: "15m"
-  }
+    duration: "15m",
+  },
 };
 
 export default function BookingConfirmation() {
   const { eventId } = useParams<{ eventId: string }>();
   const [searchParams] = useSearchParams();
 
-  const eventType = eventId ? eventTypes[eventId as keyof typeof eventTypes] : null;
+  const eventType = eventId
+    ? eventTypes[eventId as keyof typeof eventTypes]
+    : null;
   const dateParam = searchParams.get("date");
   const timeParam = searchParams.get("time");
   const nameParam = searchParams.get("name");
@@ -53,7 +63,7 @@ export default function BookingConfirmation() {
   }
 
   const endTime = (() => {
-    const [hours, minutes] = timeParam.split(':').map(Number);
+    const [hours, minutes] = timeParam.split(":").map(Number);
     const duration = parseInt(eventType.duration);
     const endTime = new Date();
     endTime.setHours(hours, minutes + duration);
@@ -65,7 +75,10 @@ export default function BookingConfirmation() {
       <div className="max-w-3xl mx-auto px-6 py-12">
         {/* Header */}
         <div className="flex items-center gap-4 mb-12">
-          <Link to="/" className="p-2 hover:bg-white/20 rounded-lg transition-colors">
+          <Link
+            to="/"
+            className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+          >
             <ArrowLeft className="w-5 h-5 text-body-text" />
           </Link>
           <span className="text-sm text-secondary-text">Back to bookings</span>
@@ -87,7 +100,8 @@ export default function BookingConfirmation() {
             </h1>
 
             <p className="text-body-text text-lg leading-relaxed max-w-md mx-auto animate-in slide-in-from-bottom-4 duration-500 delay-300">
-              Your meeting has been scheduled and calendar invites have been sent to all participants.
+              Your meeting has been scheduled and calendar invites have been
+              sent to all participants.
             </p>
           </div>
 
@@ -105,9 +119,7 @@ export default function BookingConfirmation() {
                 <p className="font-semibold text-heading text-lg mb-1">
                   {eventType.title}
                 </p>
-                <p className="text-sm text-body-text">
-                  with Sanskar Yadav
-                </p>
+                <p className="text-sm text-body-text">with Sanskar Yadav</p>
               </div>
 
               {/* Time */}
@@ -122,7 +134,7 @@ export default function BookingConfirmation() {
                   {selectedDate.toLocaleDateString("en-US", {
                     weekday: "long",
                     month: "short",
-                    day: "numeric"
+                    day: "numeric",
                   })}
                 </p>
                 <p className="text-sm text-body-text">
@@ -141,9 +153,7 @@ export default function BookingConfirmation() {
                 <p className="font-semibold text-heading text-lg mb-1">
                   Google Meet
                 </p>
-                <p className="text-sm text-body-text">
-                  Link in email
-                </p>
+                <p className="text-sm text-body-text">Link in email</p>
               </div>
             </div>
           </div>
@@ -152,7 +162,9 @@ export default function BookingConfirmation() {
           <div className="mb-8 animate-in slide-in-from-bottom-8 duration-500 delay-500">
             <div className="flex items-center gap-3 mb-4">
               <Users className="w-5 h-5 text-secondary-text" />
-              <h3 className="text-lg font-semibold text-heading">Participants</h3>
+              <h3 className="text-lg font-semibold text-heading">
+                Participants
+              </h3>
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="flex items-center gap-4 bg-accent/5 rounded-xl p-4">
@@ -161,7 +173,9 @@ export default function BookingConfirmation() {
                 </div>
                 <div>
                   <p className="font-medium text-heading">Sanskar Yadav</p>
-                  <p className="text-sm text-secondary-text">sanskar@gmail.com</p>
+                  <p className="text-sm text-secondary-text">
+                    sanskar@gmail.com
+                  </p>
                   <span className="text-xs text-accent font-medium">Host</span>
                 </div>
               </div>
@@ -179,7 +193,9 @@ export default function BookingConfirmation() {
 
           {/* Calendar Integration */}
           <div className="text-center mb-8 animate-in slide-in-from-bottom-8 duration-500 delay-600">
-            <h4 className="text-lg font-semibold text-heading mb-4">Add to your calendar</h4>
+            <h4 className="text-lg font-semibold text-heading mb-4">
+              Add to your calendar
+            </h4>
             <div className="flex justify-center gap-4">
               <Button
                 variant="outline"
@@ -187,8 +203,15 @@ export default function BookingConfirmation() {
                 className="border-grey-container hover:bg-grey-container hover:border-accent transition-all duration-200 p-4"
                 title="Google Calendar"
               >
-                <svg className="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" fill="#4285F4"/>
+                <svg
+                  className="w-6 h-6 mr-2"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"
+                    fill="#4285F4"
+                  />
                 </svg>
                 Google
               </Button>
@@ -198,8 +221,15 @@ export default function BookingConfirmation() {
                 className="border-grey-container hover:bg-grey-container hover:border-accent transition-all duration-200 p-4"
                 title="Apple Calendar"
               >
-                <svg className="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z" fill="#000"/>
+                <svg
+                  className="w-6 h-6 mr-2"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"
+                    fill="#000"
+                  />
                 </svg>
                 Apple
               </Button>
@@ -209,8 +239,15 @@ export default function BookingConfirmation() {
                 className="border-grey-container hover:bg-grey-container hover:border-accent transition-all duration-200 p-4"
                 title="Outlook"
               >
-                <svg className="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M7 9v6c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2zm8 2v4H9v-4h6z" fill="#0078D4"/>
+                <svg
+                  className="w-6 h-6 mr-2"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M7 9v6c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2zm8 2v4H9v-4h6z"
+                    fill="#0078D4"
+                  />
                 </svg>
                 Outlook
               </Button>
@@ -219,10 +256,16 @@ export default function BookingConfirmation() {
 
           {/* Action Buttons */}
           <div className="flex gap-4 animate-in slide-in-from-bottom-8 duration-500 delay-700">
-            <Button variant="outline" className="flex-1 border-grey-container hover:bg-grey-container py-3">
+            <Button
+              variant="outline"
+              className="flex-1 border-grey-container hover:bg-grey-container py-3"
+            >
               Reschedule Meeting
             </Button>
-            <Button variant="outline" className="flex-1 border-grey-container hover:bg-grey-container text-destructive hover:text-destructive py-3">
+            <Button
+              variant="outline"
+              className="flex-1 border-grey-container hover:bg-grey-container text-destructive hover:text-destructive py-3"
+            >
               Cancel Meeting
             </Button>
           </div>

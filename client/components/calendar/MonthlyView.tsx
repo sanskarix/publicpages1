@@ -8,10 +8,28 @@ interface MonthlyViewProps {
 }
 
 const timeSlots12h = [
-  "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
-  "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM",
-  "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM",
-  "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM"
+  "9:00 AM",
+  "9:30 AM",
+  "10:00 AM",
+  "10:30 AM",
+  "11:00 AM",
+  "11:30 AM",
+  "12:00 PM",
+  "12:30 PM",
+  "1:00 PM",
+  "1:30 PM",
+  "2:00 PM",
+  "2:30 PM",
+  "3:00 PM",
+  "3:30 PM",
+  "4:00 PM",
+  "4:30 PM",
+  "5:00 PM",
+  "5:30 PM",
+  "6:00 PM",
+  "6:30 PM",
+  "7:00 PM",
+  "7:30 PM",
 ];
 
 export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
@@ -24,12 +42,30 @@ export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
     setSelectedDate(today.getDate());
   }, []);
 
-  const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
-  const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
+  const daysInMonth = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth() + 1,
+    0,
+  ).getDate();
+  const firstDayOfMonth = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    1,
+  ).getDay();
 
   const monthNames = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -43,8 +79,13 @@ export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
     days.push(day);
   }
 
-  const navigateMonth = (direction: 'prev' | 'next') => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + (direction === 'next' ? 1 : -1)));
+  const navigateMonth = (direction: "prev" | "next") => {
+    setCurrentDate(
+      new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() + (direction === "next" ? 1 : -1),
+      ),
+    );
     setSelectedDate(null);
     setSelectedTime(null);
   };
@@ -57,7 +98,11 @@ export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
   const handleTimeSelect = (time: string) => {
     if (selectedDate) {
       setSelectedTime(time);
-      const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), selectedDate);
+      const date = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        selectedDate,
+      );
       onTimeSelect(date, time);
     }
   };
@@ -73,7 +118,7 @@ export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => navigateMonth('prev')}
+              onClick={() => navigateMonth("prev")}
               className="h-7 w-7 p-0 hover:bg-grey-container"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -81,7 +126,7 @@ export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => navigateMonth('next')}
+              onClick={() => navigateMonth("next")}
               className="h-7 w-7 p-0 hover:bg-grey-container"
             >
               <ChevronRight className="w-4 h-4" />
@@ -90,7 +135,10 @@ export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
         </div>
         <div className="grid grid-cols-7 gap-px bg-container rounded-lg overflow-hidden">
           {dayNames.map((day) => (
-            <div key={day} className="bg-white text-center py-2 text-xs font-medium text-secondary-text">
+            <div
+              key={day}
+              className="bg-white text-center py-2 text-xs font-medium text-secondary-text"
+            >
               {day}
             </div>
           ))}
@@ -99,10 +147,11 @@ export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
               {day && (
                 <Button
                   variant="ghost"
-                  className={`w-full h-full text-sm hover:bg-grey-container transition-colors ${selectedDate === day
+                  className={`w-full h-full text-sm hover:bg-grey-container transition-colors ${
+                    selectedDate === day
                       ? "bg-accent text-white hover:bg-accent/90"
                       : "text-body-text"
-                    }`}
+                  }`}
                   onClick={() => handleDateSelect(day)}
                 >
                   {day}
@@ -116,7 +165,9 @@ export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
         <div className="bg-white border border-grey-container rounded-lg p-4">
           <div className="mb-3">
             <h4 className="text-sm font-medium text-heading">
-              {selectedDate ? `${dayNames[new Date(currentDate.getFullYear(), currentDate.getMonth(), selectedDate).getDay()]} ${selectedDate}` : "Select a date"}
+              {selectedDate
+                ? `${dayNames[new Date(currentDate.getFullYear(), currentDate.getMonth(), selectedDate).getDay()]} ${selectedDate}`
+                : "Select a date"}
             </h4>
           </div>
           <div className="max-h-60 overflow-y-auto space-y-1 animate-in fade-in-50 duration-300">
@@ -126,10 +177,11 @@ export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
                 variant="ghost"
                 size="sm"
                 onClick={() => handleTimeSelect(time)}
-                className={`w-full justify-start text-xs h-8 transition-all duration-200 animate-in slide-in-from-right-4 ${selectedTime === time
+                className={`w-full justify-start text-xs h-8 transition-all duration-200 animate-in slide-in-from-right-4 ${
+                  selectedTime === time
                     ? "bg-accent text-white hover:bg-accent/90"
                     : "hover:bg-grey-container text-body-text"
-                  }`}
+                }`}
                 style={{ animationDelay: `${index * 20}ms` }}
               >
                 {time}
