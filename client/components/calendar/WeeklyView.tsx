@@ -4,23 +4,24 @@ import { ChevronLeft, ChevronRight, Calendar } from "lucide-react";
 
 interface WeeklyViewProps {
   onTimeSelect: (date: Date, time: string) => void;
+  onConfirm: () => void;
 }
 
 const timeSlots = [
-  "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", 
+  "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00",
   "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"
 ];
 
-export function WeeklyView({ onTimeSelect }: WeeklyViewProps) {
+export function WeeklyView({ onTimeSelect, onConfirm }: WeeklyViewProps) {
   const [currentWeek, setCurrentWeek] = useState(new Date(2025, 6, 31)); // July 31, 2025
-  const [selectedSlot, setSelectedSlot] = useState<{date: Date, time: string} | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<{ date: Date, time: string } | null>(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const getWeekDays = (startDate: Date) => {
     const days = [];
     const start = new Date(startDate);
     start.setDate(start.getDate() - start.getDay()); // Start from Sunday
-    
+
     for (let i = 0; i < 7; i++) {
       const day = new Date(start);
       day.setDate(start.getDate() + i);
@@ -43,7 +44,7 @@ export function WeeklyView({ onTimeSelect }: WeeklyViewProps) {
     const start = weekDays[0];
     const end = weekDays[6];
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    
+
     if (start.getMonth() === end.getMonth()) {
       return `${start.getDate()} - ${end.getDate()} ${monthNames[start.getMonth()]} ${start.getFullYear()}`;
     } else {
@@ -57,8 +58,8 @@ export function WeeklyView({ onTimeSelect }: WeeklyViewProps) {
   };
 
   const isSlotSelected = (date: Date, time: string) => {
-    return selectedSlot?.date.toDateString() === date.toDateString() && 
-           selectedSlot?.time === time;
+    return selectedSlot?.date.toDateString() === date.toDateString() &&
+      selectedSlot?.time === time;
   };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,7 +109,6 @@ export function WeeklyView({ onTimeSelect }: WeeklyViewProps) {
           </Button>
         </div>
       </div>
-
       {/* Calendar Grid */}
       <div className="border border-grey-container rounded-lg overflow-hidden">
         {/* Day Headers */}
@@ -125,7 +125,6 @@ export function WeeklyView({ onTimeSelect }: WeeklyViewProps) {
             </div>
           ))}
         </div>
-
         {/* Time Grid */}
         <div className="max-h-80 overflow-y-auto">
           {timeSlots.map((time) => (
@@ -134,18 +133,17 @@ export function WeeklyView({ onTimeSelect }: WeeklyViewProps) {
                 {time}
               </div>
               {weekDays.map((day, dayIndex) => (
-                <div 
+                <div
                   key={`${day.toDateString()}-${time}`}
                   className="border-l border-grey-container relative h-10"
                 >
                   {/* Available time slots - make all clickable */}
                   <Button
                     variant="ghost"
-                    className={`w-full h-full rounded-none text-xs transition-colors ${
-                      isSlotSelected(day, time)
+                    className={`w-full h-full rounded-none text-xs transition-colors ${isSlotSelected(day, time)
                         ? "bg-accent text-white hover:bg-accent/90"
                         : "hover:bg-accent/10 text-transparent hover:text-body-text"
-                    }`}
+                      }`}
                     onClick={() => handleTimeSlotClick(day, time)}
                   >
                     {isSlotSelected(day, time) ? time : ""}
@@ -162,6 +160,16 @@ export function WeeklyView({ onTimeSelect }: WeeklyViewProps) {
           ))}
         </div>
       </div>
+      {selectedSlot && (
+        <div className="mt-4">
+          <Button
+            onClick={onConfirm}
+            className="w-full bg-accent hover:bg-accent/90 text-white"
+          >
+            Confirm
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
