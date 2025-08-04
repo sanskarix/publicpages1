@@ -49,7 +49,7 @@ export default function Index() {
         <div className="text-center mb-12 animate-in fade-in-50 duration-700">
           <div className="relative inline-block mb-6 animate-in zoom-in-50 duration-500 delay-200">
             <img
-              src=""
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
               alt="Sanskar Yadav"
               className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg hover:shadow-xl transition-shadow duration-300"
             />
