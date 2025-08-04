@@ -119,24 +119,25 @@ export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
               {selectedDate ? `${dayNames[new Date(currentDate.getFullYear(), currentDate.getMonth(), selectedDate).getDay()]} ${selectedDate}` : "Select a date"}
             </h4>
           </div>
-          <div className="max-h-60 overflow-y-auto space-y-1">
-            {timeSlots12h.map((time) => (
+          <div className="max-h-60 overflow-y-auto space-y-1 animate-in fade-in-50 duration-300">
+            {timeSlots12h.map((time, index) => (
               <Button
                 key={time}
                 variant="ghost"
                 size="sm"
                 onClick={() => handleTimeSelect(time)}
-                className={`w-full justify-start text-xs h-8 transition-colors ${selectedTime === time
+                className={`w-full justify-start text-xs h-8 transition-all duration-200 animate-in slide-in-from-right-4 ${selectedTime === time
                     ? "bg-accent text-white hover:bg-accent/90"
                     : "hover:bg-grey-container text-body-text"
                   }`}
+                style={{ animationDelay: `${index * 20}ms` }}
               >
                 {time}
               </Button>
             ))}
           </div>
           {selectedTime && (
-            <>
+            <div className="animate-in slide-in-from-bottom-4 duration-300">
               <div className="border-t border-grey-container my-2"></div>
               <Button
                 onClick={onConfirm}
@@ -144,7 +145,7 @@ export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
               >
                 Confirm
               </Button>
-            </>
+            </div>
           )}
         </div>
       </div>
