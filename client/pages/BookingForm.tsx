@@ -9,33 +9,29 @@ import { ArrowLeft, Clock, MapPin, Calendar, Check } from "lucide-react";
 const eventTypes = {
   "product-hunt-chats": {
     title: "Product Hunt Chats",
-    description:
-      "The essence of Product Hunt reflects in communities. Select a time suitable for you, and let's talk products!",
-    duration: "15m",
+    description: "The essence of Product Hunt reflects in communities. Select a time suitable for you, and let's talk products!",
+    duration: "15m"
   },
-  interviews: {
+  "interviews": {
     title: "Interviews",
-    description:
-      "Let's chat about how your skills can be an asset for our team. No stress, just good vibes and great questions!",
-    duration: "30m",
+    description: "Let's chat about how your skills can be an asset for our team. No stress, just good vibes and great questions!",
+    duration: "30m"
   },
   "product-demo": {
     title: "Product Demo",
-    description:
-      "Product innovation in action! Reserve a time for a personalized demo of our next-gen scheduler.",
-    duration: "30m",
+    description: "Product innovation in action! Reserve a time for a personalized demo of our next-gen scheduler.",
+    duration: "30m"
   },
   "everything-else": {
     title: "Everything Else",
-    description:
-      "Open Agenda! Let's brainstorm over coffee or talk about your favorite singer. Whatever it is, I'm all ears! 😊",
-    duration: "15m",
+    description: "Open Agenda! Let's brainstorm over coffee or talk about your favorite singer. Whatever it is, I'm all ears! 😊",
+    duration: "15m"
   },
   "recurring-event": {
     title: "Recurring Event",
     description: "Testing out the Recurring Meetup",
-    duration: "15m",
-  },
+    duration: "15m"
+  }
 };
 
 export default function BookingForm() {
@@ -46,14 +42,12 @@ export default function BookingForm() {
     email: "",
     phone: "",
     notes: "",
-    agreeToTerms: false,
+    agreeToTerms: false
   });
   const [guests, setGuests] = useState<string[]>([]);
   const [showGuestForm, setShowGuestForm] = useState(false);
 
-  const eventType = eventId
-    ? eventTypes[eventId as keyof typeof eventTypes]
-    : null;
+  const eventType = eventId ? eventTypes[eventId as keyof typeof eventTypes] : null;
   const dateParam = searchParams.get("date");
   const timeParam = searchParams.get("time");
 
@@ -63,9 +57,7 @@ export default function BookingForm() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gradient-start via-gradient-mid to-gradient-end flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-heading mb-4">
-            Invalid booking link
-          </h1>
+          <h1 className="text-2xl font-bold text-heading mb-4">Invalid booking link</h1>
           <Link to="/" className="text-accent hover:underline">
             Return to profile
           </Link>
@@ -83,9 +75,9 @@ export default function BookingForm() {
   };
 
   const handleInputChange = (field: string, value: string | boolean) => {
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
-      [field]: value,
+      [field]: value
     }));
   };
 
@@ -103,14 +95,12 @@ export default function BookingForm() {
 
           <div className="flex items-center gap-3">
             <img
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face"
+              src=" "
               alt="Sanskar Yadav"
               className="w-10 h-10 rounded-full object-cover"
             />
             <div>
-              <h1 className="text-xl font-semibold text-heading">
-                Sanskar Yadav
-              </h1>
+              <h1 className="text-xl font-semibold text-heading">Sanskar Yadav</h1>
             </div>
           </div>
         </div>
@@ -131,9 +121,7 @@ export default function BookingForm() {
                 <div className="flex items-start gap-3">
                   <Clock className="w-4 h-4 mt-0.5 text-secondary-text flex-shrink-0" />
                   <div>
-                    <p className="text-sm font-medium text-heading">
-                      {eventType.duration}
-                    </p>
+                    <p className="text-sm font-medium text-heading">{eventType.duration}</p>
                   </div>
                 </div>
 
@@ -145,21 +133,18 @@ export default function BookingForm() {
                         weekday: "long",
                         year: "numeric",
                         month: "long",
-                        day: "numeric",
+                        day: "numeric"
                       })}
                     </p>
                     <p className="text-sm text-secondary-text">
                       {timeParam} - {/* Calculate end time */}
                       {(() => {
-                        const [hours, minutes] = timeParam
-                          .split(":")
-                          .map(Number);
+                        const [hours, minutes] = timeParam.split(':').map(Number);
                         const duration = parseInt(eventType.duration);
                         const endTime = new Date();
                         endTime.setHours(hours, minutes + duration);
                         return endTime.toTimeString().slice(0, 5);
-                      })()}{" "}
-                      ({Intl.DateTimeFormat().resolvedOptions().timeZone})
+                      })()} ({Intl.DateTimeFormat().resolvedOptions().timeZone})
                     </p>
                   </div>
                 </div>
@@ -167,9 +152,7 @@ export default function BookingForm() {
                 <div className="flex items-start gap-3">
                   <MapPin className="w-4 h-4 mt-0.5 text-secondary-text flex-shrink-0" />
                   <div>
-                    <p className="text-sm font-medium text-heading">
-                      Google Meet
-                    </p>
+                    <p className="text-sm font-medium text-heading">Google Meet</p>
                     <p className="text-sm text-secondary-text">
                       A link will be provided upon confirmation
                     </p>
@@ -189,29 +172,21 @@ export default function BookingForm() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label
-                      htmlFor="name"
-                      className="text-sm font-medium text-heading"
-                    >
+                    <Label htmlFor="name" className="text-sm font-medium text-heading">
                       Your name *
                     </Label>
                     <Input
                       id="name"
                       placeholder="Sanskar Yadav"
                       value={formData.name}
-                      onChange={(e) =>
-                        handleInputChange("name", e.target.value)
-                      }
+                      onChange={(e) => handleInputChange("name", e.target.value)}
                       className="border-grey-container focus:border-accent focus:ring-accent"
                       required
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label
-                      htmlFor="email"
-                      className="text-sm font-medium text-heading"
-                    >
+                    <Label htmlFor="email" className="text-sm font-medium text-heading">
                       Email Address *
                     </Label>
                     <Input
@@ -219,9 +194,7 @@ export default function BookingForm() {
                       type="email"
                       placeholder="sanskar.yadav@onehash.ai"
                       value={formData.email}
-                      onChange={(e) =>
-                        handleInputChange("email", e.target.value)
-                      }
+                      onChange={(e) => handleInputChange("email", e.target.value)}
                       className="border-grey-container focus:border-accent focus:ring-accent"
                       required
                     />
@@ -229,10 +202,7 @@ export default function BookingForm() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label
-                    htmlFor="phone"
-                    className="text-sm font-medium text-heading"
-                  >
+                  <Label htmlFor="phone" className="text-sm font-medium text-heading">
                     Phone Number
                   </Label>
                   <div className="flex gap-2">
@@ -243,19 +213,14 @@ export default function BookingForm() {
                       id="phone"
                       placeholder=""
                       value={formData.phone}
-                      onChange={(e) =>
-                        handleInputChange("phone", e.target.value)
-                      }
+                      onChange={(e) => handleInputChange("phone", e.target.value)}
                       className="flex-1 border-grey-container focus:border-accent focus:ring-accent"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label
-                    htmlFor="notes"
-                    className="text-sm font-medium text-heading"
-                  >
+                  <Label htmlFor="notes" className="text-sm font-medium text-heading">
                     Additional notes
                   </Label>
                   <Textarea
@@ -284,11 +249,11 @@ export default function BookingForm() {
                           <Input
                             placeholder="Guest email"
                             onKeyPress={(e) => {
-                              if (e.key === "Enter") {
+                              if (e.key === 'Enter') {
                                 const target = e.target as HTMLInputElement;
                                 if (target.value.trim()) {
                                   setGuests([...guests, target.value.trim()]);
-                                  target.value = "";
+                                  target.value = '';
                                 }
                               }
                             }}
@@ -298,14 +263,10 @@ export default function BookingForm() {
                             type="button"
                             size="sm"
                             onClick={(e) => {
-                              const input = (
-                                e.target as HTMLElement
-                              ).parentElement?.querySelector(
-                                "input",
-                              ) as HTMLInputElement;
+                              const input = (e.target as HTMLElement).parentElement?.querySelector('input') as HTMLInputElement;
                               if (input?.value.trim()) {
                                 setGuests([...guests, input.value.trim()]);
-                                input.value = "";
+                                input.value = '';
                               }
                             }}
                             className="bg-accent text-white hover:bg-accent/90"
@@ -317,20 +278,11 @@ export default function BookingForm() {
                         {guests.length > 0 && (
                           <div className="space-y-1">
                             {guests.map((guest, index) => (
-                              <div
-                                key={index}
-                                className="flex items-center justify-between bg-grey-container rounded px-2 py-1"
-                              >
-                                <span className="text-sm text-body-text">
-                                  {guest}
-                                </span>
+                              <div key={index} className="flex items-center justify-between bg-grey-container rounded px-2 py-1">
+                                <span className="text-sm text-body-text">{guest}</span>
                                 <button
                                   type="button"
-                                  onClick={() =>
-                                    setGuests(
-                                      guests.filter((_, i) => i !== index),
-                                    )
-                                  }
+                                  onClick={() => setGuests(guests.filter((_, i) => i !== index))}
                                   className="text-secondary-text hover:text-destructive text-sm"
                                 >
                                   ×
@@ -349,29 +301,18 @@ export default function BookingForm() {
                         type="checkbox"
                         id="terms"
                         checked={formData.agreeToTerms}
-                        onChange={(e) =>
-                          handleInputChange("agreeToTerms", e.target.checked)
-                        }
+                        onChange={(e) => handleInputChange("agreeToTerms", e.target.checked)}
                         className="w-4 h-4 text-accent border-grey-container rounded focus:ring-accent"
                         required
                       />
                     </div>
-                    <Label
-                      htmlFor="terms"
-                      className="text-sm text-secondary-text leading-relaxed"
-                    >
+                    <Label htmlFor="terms" className="text-sm text-secondary-text leading-relaxed">
                       By proceeding, you agree to our{" "}
-                      <button
-                        type="button"
-                        className="text-accent hover:underline"
-                      >
+                      <button type="button" className="text-accent hover:underline">
                         Terms
                       </button>{" "}
                       and{" "}
-                      <button
-                        type="button"
-                        className="text-accent hover:underline"
-                      >
+                      <button type="button" className="text-accent hover:underline">
                         Privacy Policy
                       </button>
                     </Label>
@@ -389,11 +330,7 @@ export default function BookingForm() {
                   </Button>
                   <Button
                     type="submit"
-                    disabled={
-                      !formData.name ||
-                      !formData.email ||
-                      !formData.agreeToTerms
-                    }
+                    disabled={!formData.name || !formData.email || !formData.agreeToTerms}
                     className="flex-1 bg-accent hover:bg-accent/90 text-white disabled:bg-grey-container disabled:text-secondary-text"
                   >
                     Confirm
