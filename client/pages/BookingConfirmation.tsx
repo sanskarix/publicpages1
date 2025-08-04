@@ -169,12 +169,43 @@ export default function BookingConfirmation() {
 
           {/* Action Buttons */}
           <div className="space-y-4">
-            <Button className="w-full bg-accent hover:bg-accent/90 text-white">
-              <Calendar className="w-4 h-4 mr-2" />
-              Add to Calendar
-            </Button>
+            <div className="space-y-3">
+              <h4 className="text-sm font-medium text-heading text-left">Add to Calendar</h4>
+              <div className="flex gap-3 justify-center">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-grey-container hover:bg-grey-container p-3 h-auto"
+                  title="Google Calendar"
+                >
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" fill="#4285F4"/>
+                  </svg>
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-grey-container hover:bg-grey-container p-3 h-auto"
+                  title="Apple Calendar"
+                >
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z" fill="#000"/>
+                  </svg>
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-grey-container hover:bg-grey-container p-3 h-auto"
+                  title="Outlook"
+                >
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 9v6c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2zm8 2v4H9v-4h6z" fill="#0078D4"/>
+                  </svg>
+                </Button>
+              </div>
+            </div>
 
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               <Button variant="outline" className="flex-1 border-grey-container hover:bg-grey-container">
                 Reschedule
               </Button>
