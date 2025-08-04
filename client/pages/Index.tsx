@@ -61,7 +61,7 @@ const eventTypes = [
 export default function Index() {
   return (
     <div className="min-h-screen bg-white">
-      <div className="max-w-2xl mx-auto px-4 py-8">
+      <div className="max-w-3xl mx-auto px-4 py-8">
         {/* Header Section */}
         <div className="text-center mb-12 animate-in fade-in-50 duration-700">
           <div className="bg-gradient-to-br from-gradient-start via-gradient-mid to-gradient-end rounded-2xl p-8 mb-8 animate-in zoom-in-95 duration-500">
