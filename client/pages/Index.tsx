@@ -91,6 +91,9 @@ export default function Index() {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${eventType.color}`}>
+                        <eventType.icon className="w-4 h-4" />
+                      </div>
                       <h3 className="text-base font-semibold text-heading">
                         {eventType.title}
                       </h3>
