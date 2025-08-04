@@ -8,7 +8,7 @@ const eventTypes = {
     duration: "15m"
   },
   "interviews": {
-    title: "Interviews", 
+    title: "Interviews",
     duration: "30m"
   },
   "product-demo": {
@@ -28,13 +28,13 @@ const eventTypes = {
 export default function BookingConfirmation() {
   const { eventId } = useParams<{ eventId: string }>();
   const [searchParams] = useSearchParams();
-  
+
   const eventType = eventId ? eventTypes[eventId as keyof typeof eventTypes] : null;
   const dateParam = searchParams.get("date");
   const timeParam = searchParams.get("time");
   const nameParam = searchParams.get("name");
   const emailParam = searchParams.get("email");
-  
+
   const selectedDate = dateParam ? new Date(dateParam) : null;
 
   if (!eventType || !selectedDate || !timeParam || !nameParam || !emailParam) {
@@ -80,7 +80,7 @@ export default function BookingConfirmation() {
           <h1 className="text-2xl font-bold text-heading mb-3">
             Meeting Scheduled!
           </h1>
-          
+
           <p className="text-body-text mb-8 leading-relaxed">
             A calendar invite has been sent to all participants.
           </p>
@@ -111,11 +111,11 @@ export default function BookingConfirmation() {
               <div className="flex-1">
                 <h3 className="text-sm font-medium text-secondary-text mb-1">Time</h3>
                 <p className="font-semibold text-heading">
-                  {selectedDate.toLocaleDateString("en-US", { 
-                    weekday: "long", 
-                    year: "numeric", 
-                    month: "long", 
-                    day: "numeric" 
+                  {selectedDate.toLocaleDateString("en-US", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
                   })}
                 </p>
                 <p className="text-sm text-body-text">
@@ -173,7 +173,7 @@ export default function BookingConfirmation() {
               <Calendar className="w-4 h-4 mr-2" />
               Add to Calendar
             </Button>
-            
+
             <div className="flex gap-2">
               <Button variant="outline" className="flex-1 border-grey-container hover:bg-grey-container">
                 Reschedule
