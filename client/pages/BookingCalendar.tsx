@@ -1,60 +1,63 @@
 import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useSearchParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Calendar, Clock, MapPin } from "lucide-react";
-import { MonthlyView } from "@/components/calendar/MonthlyView";
-import { WeeklyView } from "@/components/calendar/WeeklyView";
-import { ColumnView } from "@/components/calendar/ColumnView";
-
-type ViewType = "monthly" | "weekly" | "column";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { ArrowLeft, Clock, MapPin, Calendar, Check } from "lucide-react";
 
 const eventTypes = {
   "product-hunt-chats": {
     title: "Product Hunt Chats",
     description: "The essence of Product Hunt reflects in communities. Select a time suitable for you, and let's talk products!",
-    duration: "15m",
-    color: "bg-green-100 text-green-700"
+    duration: "15m"
   },
   "interviews": {
-    title: "Interviews", 
+    title: "Interviews",
     description: "Let's chat about how your skills can be an asset for our team. No stress, just good vibes and great questions!",
-    duration: "30m",
-    color: "bg-blue-100 text-blue-700"
+    duration: "30m"
   },
   "product-demo": {
     title: "Product Demo",
     description: "Product innovation in action! Reserve a time for a personalized demo of our next-gen scheduler.",
-    duration: "30m",
-    color: "bg-purple-100 text-purple-700"
+    duration: "30m"
   },
   "everything-else": {
     title: "Everything Else",
     description: "Open Agenda! Let's brainstorm over coffee or talk about your favorite singer. Whatever it is, I'm all ears! 😊",
-    duration: "15m",
-    color: "bg-orange-100 text-orange-700"
+    duration: "15m"
   },
   "recurring-event": {
     title: "Recurring Event",
     description: "Testing out the Recurring Meetup",
-    duration: "15m",
-    color: "bg-pink-100 text-pink-700"
+    duration: "15m"
   }
 };
 
-export default function BookingCalendar() {
+export default function BookingForm() {
   const { eventId } = useParams<{ eventId: string }>();
-  const [selectedView, setSelectedView] = useState<ViewType>("monthly");
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [selectedDuration, setSelectedDuration] = useState<string>("15m");
+  const [searchParams] = useSearchParams();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    notes: "",
+    agreeToTerms: false
+  });
+  const [guests, setGuests] = useState<string[]>([]);
+  const [showGuestForm, setShowGuestForm] = useState(false);
 
   const eventType = eventId ? eventTypes[eventId as keyof typeof eventTypes] : null;
+  const dateParam = searchParams.get("date");
+  const timeParam = searchParams.get("time");
 
-  if (!eventType) {
+  const selectedDate = dateParam ? new Date(dateParam) : null;
+
+  if (!eventType || !selectedDate || !timeParam) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gradient-start via-gradient-mid to-gradient-end flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-heading mb-4">Event not found</h1>
+          <h1 className="text-2xl font-bold text-heading mb-4">Invalid booking link</h1>
           <Link to="/" className="text-accent hover:underline">
             Return to profile
           </Link>
@@ -63,146 +66,277 @@ export default function BookingCalendar() {
     );
   }
 
-  const handleTimeSelect = (date: Date, time: string) => {
-    setSelectedDate(date);
-    setSelectedTime(time);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (formData.name && formData.email && formData.agreeToTerms) {
+      // Navigate to confirmation page
+      window.location.href = `/book/${eventId}/confirmed?date=${selectedDate.toISOString()}&time=${timeParam}&name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`;
+    }
   };
 
-  const handleBookingConfirm = () => {
-    if (selectedDate && selectedTime && eventId) {
-      window.location.href = `/book/${eventId}/form?date=${selectedDate.toISOString()}&time=${selectedTime}`;
-    }
+  const handleInputChange = (field: string, value: string | boolean) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center">
-      <div className="max-w-6xl mx-auto px-4 py-6 w-full">
+      <div className="max-w-4xl mx-auto px-4 py-6 w-full">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
-            <Link to="/" className="p-2 hover:bg-white/50 rounded-lg transition-colors">
-              <ArrowLeft className="w-5 h-5 text-body-text" />
-            </Link>
+        <div className="flex items-center gap-4 mb-8">
+          <Link
+            to={`/book/${eventId}`}
+            className="p-2 hover:bg-white/50 rounded-lg transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5 text-body-text" />
+          </Link>
 
-            <div className="flex items-center gap-3">
-              <img
-                src=""
-                alt="Sanskar Yadav"
-                className="w-10 h-10 rounded-full object-cover"
-              />
-              <div>
-                <h1 className="text-xl font-semibold text-heading">Sanskar Yadav</h1>
-              </div>
+          <div className="flex items-center gap-3">
+            <img
+              src=" "
+              alt="Sanskar Yadav"
+              className="w-10 h-10 rounded-full object-cover"
+            />
+            <div>
+              <h1 className="text-xl font-semibold text-heading">Sanskar Yadav</h1>
             </div>
-          </div>
-
-          {/* View Switcher */}
-          <div className="flex gap-1 bg-grey-container rounded-lg p-1">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setSelectedView("monthly")}
-              className={selectedView === "monthly" ? "bg-accent text-white hover:bg-accent/90" : "text-secondary-text hover:text-body-text"}
-            >
-              Monthly
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setSelectedView("weekly")}
-              className={selectedView === "weekly" ? "bg-accent text-white hover:bg-accent/90" : "text-secondary-text hover:text-body-text"}
-            >
-              Weekly
-            </Button>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-6">
-          {/* Left Panel - Event Details */}
-          <div className="lg:col-span-1">
+        <div className="grid lg:grid-cols-12 gap-8">
+          {/* Left Panel - Event & Time Details */}
+          <div className="lg:col-span-4 animate-in slide-in-from-left-8 duration-500">
             <div className="bg-white rounded-lg p-6 shadow-sm border border-grey-container sticky top-8">
               <h2 className="text-xl font-semibold text-heading mb-3">
                 {eventType.title}
               </h2>
-              
+
               <p className="text-body-text text-sm mb-6 leading-relaxed">
                 {eventType.description}
               </p>
-              
-              <div className="space-y-4">
-                <div>
-                  <div className="flex items-center gap-3 text-secondary-text mb-2">
-                    <Clock className="w-4 h-4" />
-                    <span className="text-sm font-medium">Duration</span>
-                  </div>
-                  <div className="flex gap-2 flex-wrap">
-                    {["15m", "30m", "45m", "60m"].map((duration) => (
-                      <button
-                        key={duration}
-                        onClick={() => setSelectedDuration(duration)}
-                        className={`px-3 py-1 text-sm rounded-md transition-colors ${
-                          selectedDuration === duration
-                            ? "bg-accent text-white"
-                            : "bg-grey-container text-body-text hover:bg-grey-container/80"
-                        }`}
-                      >
-                        {duration}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 text-secondary-text">
-                  <MapPin className="w-4 h-4" />
-                  <span className="text-sm">Google Meet</span>
-                </div>
-                <div className="flex items-center gap-3 text-secondary-text">
-                  <Calendar className="w-4 h-4" />
-                  <span className="text-sm">AeroKokata</span>
-                </div>
-              </div>
 
-              {selectedDate && selectedTime && (
-                <div className="mt-6 pt-6 border-t border-grey-container">
-                  <h3 className="font-medium text-heading mb-3">Selected Time</h3>
-                  <div className="bg-grey-container rounded-lg p-3 mb-4">
-                    <p className="text-sm text-body-text">
-                      {selectedDate.toLocaleDateString("en-US", { 
-                        weekday: "long", 
-                        year: "numeric", 
-                        month: "long", 
-                        day: "numeric" 
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <Clock className="w-4 h-4 mt-0.5 text-secondary-text flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-heading">{eventType.duration}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <Calendar className="w-4 h-4 mt-0.5 text-secondary-text flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-heading">
+                      {selectedDate.toLocaleDateString("en-US", {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric"
                       })}
                     </p>
-                    <p className="text-sm font-medium text-heading">
-                      {selectedTime}
+                    <p className="text-sm text-secondary-text">
+                      {timeParam} - {/* Calculate end time */}
+                      {(() => {
+                        const [hours, minutes] = timeParam.split(':').map(Number);
+                        const duration = parseInt(eventType.duration);
+                        const endTime = new Date();
+                        endTime.setHours(hours, minutes + duration);
+                        return endTime.toTimeString().slice(0, 5);
+                      })()} ({Intl.DateTimeFormat().resolvedOptions().timeZone})
                     </p>
                   </div>
-                  <Button 
-                    onClick={handleBookingConfirm}
-                    className="w-full bg-accent hover:bg-accent/90 text-white"
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <MapPin className="w-4 h-4 mt-0.5 text-secondary-text flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-heading">Google Meet</p>
+                    <p className="text-sm text-secondary-text">
+                      A link will be provided upon confirmation
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Panel - Booking Form */}
+          <div className="lg:col-span-8 animate-in slide-in-from-right-8 duration-500 delay-200">
+            <div className="bg-white rounded-lg p-6 shadow-sm border border-grey-container">
+              <h3 className="text-xl font-semibold text-heading mb-6">
+                Enter Details
+              </h3>
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className="text-sm font-medium text-heading">
+                      Your name *
+                    </Label>
+                    <Input
+                      id="name"
+                      placeholder="Sanskar Yadav"
+                      value={formData.name}
+                      onChange={(e) => handleInputChange("name", e.target.value)}
+                      className="border-grey-container focus:border-accent focus:ring-accent"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-sm font-medium text-heading">
+                      Email Address *
+                    </Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="sanskar.yadav@onehash.ai"
+                      value={formData.email}
+                      onChange={(e) => handleInputChange("email", e.target.value)}
+                      className="border-grey-container focus:border-accent focus:ring-accent"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="phone" className="text-sm font-medium text-heading">
+                    Phone Number
+                  </Label>
+                  <div className="flex gap-2">
+                    <select className="border border-grey-container rounded-md px-3 py-2 text-sm bg-white">
+                      <option value="+91">🇮🇳 +91</option>
+                    </select>
+                    <Input
+                      id="phone"
+                      placeholder=""
+                      value={formData.phone}
+                      onChange={(e) => handleInputChange("phone", e.target.value)}
+                      className="flex-1 border-grey-container focus:border-accent focus:ring-accent"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="notes" className="text-sm font-medium text-heading">
+                    Additional notes
+                  </Label>
+                  <Textarea
+                    id="notes"
+                    placeholder="Please share anything that will help prepare for our meeting."
+                    value={formData.notes}
+                    onChange={(e) => handleInputChange("notes", e.target.value)}
+                    className="border-grey-container focus:border-accent focus:ring-accent min-h-[100px]"
+                    rows={4}
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => setShowGuestForm(!showGuestForm)}
+                      className="flex items-center gap-2 text-secondary-text text-sm hover:text-accent transition-colors"
+                    >
+                      <span>Add guests</span>
+                    </button>
+
+                    {showGuestForm && (
+                      <div className="mt-3 space-y-2">
+                        <div className="flex gap-2">
+                          <Input
+                            placeholder="Guest email"
+                            onKeyPress={(e) => {
+                              if (e.key === 'Enter') {
+                                const target = e.target as HTMLInputElement;
+                                if (target.value.trim()) {
+                                  setGuests([...guests, target.value.trim()]);
+                                  target.value = '';
+                                }
+                              }
+                            }}
+                            className="flex-1 text-sm border-grey-container focus:border-accent focus:ring-accent"
+                          />
+                          <Button
+                            type="button"
+                            size="sm"
+                            onClick={(e) => {
+                              const input = (e.target as HTMLElement).parentElement?.querySelector('input') as HTMLInputElement;
+                              if (input?.value.trim()) {
+                                setGuests([...guests, input.value.trim()]);
+                                input.value = '';
+                              }
+                            }}
+                            className="bg-accent text-white hover:bg-accent/90"
+                          >
+                            +
+                          </Button>
+                        </div>
+
+                        {guests.length > 0 && (
+                          <div className="space-y-1">
+                            {guests.map((guest, index) => (
+                              <div key={index} className="flex items-center justify-between bg-grey-container rounded px-2 py-1">
+                                <span className="text-sm text-body-text">{guest}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => setGuests(guests.filter((_, i) => i !== index))}
+                                  className="text-secondary-text hover:text-destructive text-sm"
+                                >
+                                  ×
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="flex items-center gap-2 mt-1">
+                      <input
+                        type="checkbox"
+                        id="terms"
+                        checked={formData.agreeToTerms}
+                        onChange={(e) => handleInputChange("agreeToTerms", e.target.checked)}
+                        className="w-4 h-4 text-accent border-grey-container rounded focus:ring-accent"
+                        required
+                      />
+                    </div>
+                    <Label htmlFor="terms" className="text-sm text-secondary-text leading-relaxed">
+                      By proceeding, you agree to our{" "}
+                      <button type="button" className="text-accent hover:underline">
+                        Terms
+                      </button>{" "}
+                      and{" "}
+                      <button type="button" className="text-accent hover:underline">
+                        Privacy Policy
+                      </button>
+                    </Label>
+                  </div>
+                </div>
+
+                <div className="flex gap-3 pt-4">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => window.history.back()}
+                    className="flex-1 border-grey-container text-body-text hover:bg-grey-container"
+                  >
+                    Back
+                  </Button>
+                  <Button
+                    type="submit"
+                    disabled={!formData.name || !formData.email || !formData.agreeToTerms}
+                    className="flex-1 bg-accent hover:bg-accent/90 text-white disabled:bg-grey-container disabled:text-secondary-text"
                   >
                     Confirm
                   </Button>
                 </div>
-              )}
-            </div>
-          </div>
-
-          {/* Right Panel - Calendar */}
-          <div className="lg:col-span-2 relative">
-            <div className="bg-white rounded-lg shadow-sm border border-grey-container">
-              {/* Calendar Content */}
-              <div className="p-4">
-                {selectedView === "monthly" && (
-                  <MonthlyView onTimeSelect={handleTimeSelect} />
-                )}
-                {selectedView === "weekly" && (
-                  <WeeklyView onTimeSelect={handleTimeSelect} />
-                )}
-                {selectedView === "column" && (
-                  <ColumnView onTimeSelect={handleTimeSelect} />
-                )}
-              </div>
+              </form>
             </div>
           </div>
         </div>
