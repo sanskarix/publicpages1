@@ -70,7 +70,7 @@ export default function Index() {
             </h1>
 
             <p className="text-secondary-text text-lg animate-in slide-in-from-bottom-4 duration-500 delay-400">
-              OneHash | Building the craziest tools on the internet 🚀
+              OneHash - Building the craziest tools on the internet 🚀
             </p>
           </div>
 
