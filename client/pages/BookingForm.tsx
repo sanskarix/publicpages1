@@ -13,7 +13,7 @@ const eventTypes = {
     duration: "15m"
   },
   "interviews": {
-    title: "Interviews", 
+    title: "Interviews",
     description: "Let's chat about how your skills can be an asset for our team. No stress, just good vibes and great questions!",
     duration: "30m"
   },
@@ -50,7 +50,7 @@ export default function BookingForm() {
   const eventType = eventId ? eventTypes[eventId as keyof typeof eventTypes] : null;
   const dateParam = searchParams.get("date");
   const timeParam = searchParams.get("time");
-  
+
   const selectedDate = dateParam ? new Date(dateParam) : null;
 
   if (!eventType || !selectedDate || !timeParam) {
@@ -86,15 +86,15 @@ export default function BookingForm() {
       <div className="max-w-4xl mx-auto px-4 py-6 w-full">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
-          <Link 
-            to={`/book/${eventId}`} 
+          <Link
+            to={`/book/${eventId}`}
             className="p-2 hover:bg-white/50 rounded-lg transition-colors"
           >
             <ArrowLeft className="w-5 h-5 text-body-text" />
           </Link>
-          
+
           <div className="flex items-center gap-3">
-            <img 
+            <img
               src=" "
               alt="Sanskar Yadav"
               className="w-10 h-10 rounded-full object-cover"
@@ -112,11 +112,11 @@ export default function BookingForm() {
               <h2 className="text-xl font-semibold text-heading mb-3">
                 {eventType.title}
               </h2>
-              
+
               <p className="text-body-text text-sm mb-6 leading-relaxed">
                 {eventType.description}
               </p>
-              
+
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <Clock className="w-4 h-4 mt-0.5 text-secondary-text flex-shrink-0" />
@@ -124,16 +124,16 @@ export default function BookingForm() {
                     <p className="text-sm font-medium text-heading">{eventType.duration}</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start gap-3">
                   <Calendar className="w-4 h-4 mt-0.5 text-secondary-text flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-heading">
-                      {selectedDate.toLocaleDateString("en-US", { 
-                        weekday: "long", 
-                        year: "numeric", 
-                        month: "long", 
-                        day: "numeric" 
+                      {selectedDate.toLocaleDateString("en-US", {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric"
                       })}
                     </p>
                     <p className="text-sm text-secondary-text">
@@ -148,7 +148,7 @@ export default function BookingForm() {
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start gap-3">
                   <MapPin className="w-4 h-4 mt-0.5 text-secondary-text flex-shrink-0" />
                   <div>
@@ -184,7 +184,7 @@ export default function BookingForm() {
                       required
                     />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="email" className="text-sm font-medium text-heading">
                       Email Address *
@@ -294,7 +294,7 @@ export default function BookingForm() {
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="flex items-start gap-3">
                     <div className="flex items-center gap-2 mt-1">
                       <input
