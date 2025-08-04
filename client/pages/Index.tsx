@@ -8,28 +8,32 @@ const eventTypes = [
     title: "Product Hunt Chats",
     description: "The essence of Product Hunt reflects in communities. Select a time suitable for you, and let's talk products!",
     duration: "15m",
-    color: "bg-green-100 text-green-700"
+    color: "bg-green-100 text-green-700",
+    icon: MessageCircle
   },
   {
     id: "interviews",
     title: "Interviews",
     description: "Let's chat about how your skills can be an asset for our team. No stress, just good vibes and great questions!",
     duration: "30m",
-    color: "bg-blue-100 text-blue-700"
+    color: "bg-blue-100 text-blue-700",
+    icon: Users
   },
   {
     id: "product-demo",
     title: "Product Demo",
     description: "Product innovation in action! Reserve a time for a personalized demo of our next-gen scheduler.",
     duration: "30m",
-    color: "bg-purple-100 text-purple-700"
+    color: "bg-purple-100 text-purple-700",
+    icon: Monitor
   },
   {
     id: "everything-else",
     title: "Everything Else",
     description: "Open Agenda! Let's brainstorm over coffee or talk about your favorite singer. Whatever it is, I'm all ears! 😊",
     duration: "15m",
-    color: "bg-orange-100 text-orange-700"
+    color: "bg-orange-100 text-orange-700",
+    icon: Coffee
   },
   {
     id: "recurring-event",
@@ -37,6 +41,7 @@ const eventTypes = [
     description: "Testing out the Recurring Meetup",
     duration: "15m",
     color: "bg-pink-100 text-pink-700",
+    icon: Calendar,
     recurring: true
   }
 ];
