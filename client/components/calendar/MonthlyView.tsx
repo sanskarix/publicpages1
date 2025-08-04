@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -45,12 +45,12 @@ export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
   const daysInMonth = new Date(
     currentDate.getFullYear(),
     currentDate.getMonth() + 1,
-    0,
+    0
   ).getDate();
   const firstDayOfMonth = new Date(
     currentDate.getFullYear(),
     currentDate.getMonth(),
-    1,
+    1
   ).getDay();
 
   const monthNames = [
@@ -83,8 +83,8 @@ export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
     setCurrentDate(
       new Date(
         currentDate.getFullYear(),
-        currentDate.getMonth() + (direction === "next" ? 1 : -1),
-      ),
+        currentDate.getMonth() + (direction === "next" ? 1 : -1)
+      )
     );
     setSelectedDate(null);
     setSelectedTime(null);
@@ -101,7 +101,7 @@ export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
       const date = new Date(
         currentDate.getFullYear(),
         currentDate.getMonth(),
-        selectedDate,
+        selectedDate
       );
       onTimeSelect(date, time);
     }
@@ -109,6 +109,7 @@ export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
 
   return (
     <div className="flex gap-6">
+      {/* Calendar on left */}
       <div className="flex-1">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-medium text-heading">
@@ -147,11 +148,10 @@ export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
               {day && (
                 <Button
                   variant="ghost"
-                  className={`w-full h-full text-sm hover:bg-grey-container transition-colors ${
-                    selectedDate === day
+                  className={`w-full h-full text-sm hover:bg-grey-container transition-colors ${selectedDate === day
                       ? "bg-accent text-white hover:bg-accent/90"
                       : "text-body-text"
-                  }`}
+                    }`}
                   onClick={() => handleDateSelect(day)}
                 >
                   {day}
@@ -161,12 +161,19 @@ export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
           ))}
         </div>
       </div>
+      {/* Time and Confirm on right */}
       <div className="w-48 animate-in slide-in-from-right-8 duration-300">
         <div className="bg-white border border-grey-container rounded-lg p-4">
           <div className="mb-3">
             <h4 className="text-sm font-medium text-heading">
               {selectedDate
-                ? `${dayNames[new Date(currentDate.getFullYear(), currentDate.getMonth(), selectedDate).getDay()]} ${selectedDate}`
+                ? `${dayNames[
+                new Date(
+                  currentDate.getFullYear(),
+                  currentDate.getMonth(),
+                  selectedDate
+                ).getDay()
+                ]} ${selectedDate}`
                 : "Select a date"}
             </h4>
           </div>
@@ -177,11 +184,10 @@ export function MonthlyView({ onTimeSelect, onConfirm }: MonthlyViewProps) {
                 variant="ghost"
                 size="sm"
                 onClick={() => handleTimeSelect(time)}
-                className={`w-full justify-start text-xs h-8 transition-all duration-200 animate-in slide-in-from-right-4 ${
-                  selectedTime === time
+                className={`w-full justify-start text-xs h-8 transition-all duration-200 animate-in slide-in-from-right-4 ${selectedTime === time
                     ? "bg-accent text-white hover:bg-accent/90"
                     : "hover:bg-grey-container text-body-text"
-                }`}
+                  }`}
                 style={{ animationDelay: `${index * 20}ms` }}
               >
                 {time}
