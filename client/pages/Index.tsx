@@ -30,7 +30,7 @@ const eventTypes = [
   {
     id: "everything-else",
     title: "Everything Else",
-    description: "Open Agenda! Let's brainstorm over coffee or talk about your favorite singer. Whatever it is, I'm all ears! ��",
+    description: "Open Agenda! Let's brainstorm over coffee or talk about your favorite singer. Whatever it is, I'm all ears! 😊",
     duration: "15m",
     color: "bg-orange-100 text-orange-700",
     icon: Coffee
@@ -48,7 +48,7 @@ const eventTypes = [
 
 export default function Index() {
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center">
+    <div className="min-h-screen bg-white">
       <div className="max-w-2xl mx-auto px-4 py-8">
         {/* Header Section */}
         <div className="text-center mb-12 animate-in fade-in-50 duration-700">
