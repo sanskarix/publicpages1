@@ -157,7 +157,7 @@ export default function BookingCalendar() {
               {selectedDate && selectedTime && (
                 <div className="mt-6 pt-6 border-t border-grey-container">
                   <h3 className="font-medium text-heading mb-3">Selected Time</h3>
-                  <div className="bg-grey-container rounded-lg p-3 mb-0">
+                  <div className="bg-grey-container rounded-lg p-3 mb-4">
                     <p className="text-sm text-body-text">
                       {selectedDate.toLocaleDateString("en-US", {
                         weekday: "long",
@@ -170,6 +170,12 @@ export default function BookingCalendar() {
                       {selectedTime}
                     </p>
                   </div>
+                  <Button
+                    onClick={handleBookingConfirm}
+                    className="w-full bg-accent hover:bg-accent/90 text-white"
+                  >
+                    Confirm
+                  </Button>
                 </div>
               )}
             </div>
