@@ -60,7 +60,7 @@ export default function BookingConfirmation() {
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center">
-      <div className="max-w-lg mx-auto px-4 py-8">
+      <div className="max-w-2xl mx-auto px-6 py-8">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <Link to="/" className="p-2 hover:bg-grey-container/50 rounded-lg transition-colors">
