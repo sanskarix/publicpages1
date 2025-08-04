@@ -49,7 +49,7 @@ const eventTypes = [
 export default function Index() {
   return (
     <div className="min-h-screen bg-white flex items-center justify-center">
-      <div className="max-w-xl mx-auto px-4 py-8">
+      <div className="max-w-2xl mx-auto px-4 py-8">
         {/* Header Section */}
         <div className="text-center mb-12 animate-in fade-in-50 duration-700">
           <div className="relative inline-block mb-6 animate-in zoom-in-50 duration-500 delay-200">
