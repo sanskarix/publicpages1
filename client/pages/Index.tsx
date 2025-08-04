@@ -30,7 +30,7 @@ const eventTypes = [
   {
     id: "everything-else",
     title: "Everything Else",
-    description: "Open Agenda! Let's brainstorm over coffee or talk about your favorite singer. Whatever it is, I'm all ears! 😊",
+    description: "Open Agenda! Let's brainstorm over coffee or talk about your favorite singer. Whatever it is, I'm all ears! ��",
     duration: "15m",
     color: "bg-orange-100 text-orange-700",
     icon: Coffee
@@ -53,14 +53,6 @@ export default function Index() {
         {/* Header Section */}
         <div className="text-center mb-12 animate-in fade-in-50 duration-700">
           <div className="bg-gradient-to-br from-gradient-start via-gradient-mid to-gradient-end rounded-2xl p-8 mb-8 animate-in zoom-in-95 duration-500">
-            <div className="relative inline-block mb-6 animate-in zoom-in-50 duration-500 delay-200">
-              <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
-                alt="Sanskar Yadav"
-                className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg hover:shadow-xl transition-shadow duration-300"
-              />
-            </div>
-
             <h1 className="text-3xl font-bold text-heading mb-3 animate-in slide-in-from-bottom-4 duration-500 delay-300">
               Sanskar Yadav
             </h1>
