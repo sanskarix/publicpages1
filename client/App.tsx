@@ -36,4 +36,11 @@ const App = () => (
   </QueryClientProvider>
 );
 
-createRoot(document.getElementById("root")!).render(<App />);
+const container = document.getElementById("root")!;
+
+// Store the root instance globally to prevent recreation
+if (!(window as any).__react_root__) {
+  (window as any).__react_root__ = createRoot(container);
+}
+
+(window as any).__react_root__.render(<App />);
