@@ -128,7 +128,6 @@ export default function Index() {
                       </div>
                     </div>
                   </div>
-
                   <div className="ml-4">
                     <div
                       className={`w-3 h-3 rounded-full ${eventType.color.split(" ")[0]}`}
