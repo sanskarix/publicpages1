@@ -6,34 +6,30 @@ const eventTypes = [
   {
     id: "product-hunt-chats",
     title: "Product Hunt Chats",
-    description:
-      "The essence of Product Hunt reflects in communities. Select a time suitable for you, and let's talk products!",
+    description: "The essence of Product Hunt reflects in communities. Select a time suitable for you, and let's talk products!",
     duration: "15m",
-    color: "bg-green-100 text-green-700",
+    color: "bg-green-100 text-green-700"
   },
   {
     id: "interviews",
     title: "Interviews",
-    description:
-      "Let's chat about how your skills can be an asset for our team. No stress, just good vibes and great questions!",
+    description: "Let's chat about how your skills can be an asset for our team. No stress, just good vibes and great questions!",
     duration: "30m",
-    color: "bg-blue-100 text-blue-700",
+    color: "bg-blue-100 text-blue-700"
   },
   {
     id: "product-demo",
     title: "Product Demo",
-    description:
-      "Product innovation in action! Reserve a time for a personalized demo of our next-gen scheduler.",
+    description: "Product innovation in action! Reserve a time for a personalized demo of our next-gen scheduler.",
     duration: "30m",
-    color: "bg-purple-100 text-purple-700",
+    color: "bg-purple-100 text-purple-700"
   },
   {
     id: "everything-else",
     title: "Everything Else",
-    description:
-      "Open Agenda! Let's brainstorm over coffee or talk about your favorite singer. Whatever it is, I'm all ears! 😊",
+    description: "Open Agenda! Let's brainstorm over coffee or talk about your favorite singer. Whatever it is, I'm all ears! 😊",
     duration: "15m",
-    color: "bg-orange-100 text-orange-700",
+    color: "bg-orange-100 text-orange-700"
   },
   {
     id: "recurring-event",
@@ -41,8 +37,8 @@ const eventTypes = [
     description: "Testing out the Recurring Meetup",
     duration: "15m",
     color: "bg-pink-100 text-pink-700",
-    recurring: true,
-  },
+    recurring: true
+  }
 ];
 
 export default function Index() {
@@ -53,7 +49,7 @@ export default function Index() {
         <div className="text-center mb-12 animate-in fade-in-50 duration-700">
           <div className="relative inline-block mb-6 animate-in zoom-in-50 duration-500 delay-200">
             <img
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
+              src=""
               alt="Sanskar Yadav"
               className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg hover:shadow-xl transition-shadow duration-300"
             />
@@ -64,16 +60,13 @@ export default function Index() {
           </h1>
 
           <p className="text-secondary-text text-lg mb-8 animate-in slide-in-from-bottom-4 duration-500 delay-400">
-            Head of Growth @OneHash | Building the craziest tools on the
-            internet 🚀
+            Head of Growth @OneHash | Building the craziest tools on the internet 🚀
           </p>
 
           {/* Divider */}
           <div className="flex items-center justify-center mb-8">
             <div className="h-px bg-grey-container flex-1 max-w-24"></div>
-            <div className="mx-4 text-secondary-text text-sm">
-              Choose a meeting type
-            </div>
+            <div className="mx-4 text-secondary-text text-sm">Choose a meeting type</div>
             <div className="h-px bg-grey-container flex-1 max-w-24"></div>
           </div>
         </div>
@@ -118,9 +111,7 @@ export default function Index() {
                   </div>
 
                   <div className="ml-4">
-                    <div
-                      className={`w-3 h-3 rounded-full ${eventType.color.split(" ")[0]}`}
-                    ></div>
+                    <div className={`w-3 h-3 rounded-full ${eventType.color.split(' ')[0]}`}></div>
                   </div>
                 </div>
               </div>
