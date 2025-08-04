@@ -24,10 +24,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/book/:eventId" element={<BookingCalendar />} />
           <Route path="/book/:eventId/form" element={<BookingForm />} />
-          <Route
-            path="/book/:eventId/confirmed"
-            element={<BookingConfirmation />}
-          />
+          <Route path="/book/:eventId/confirmed" element={<BookingConfirmation />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -36,4 +33,7 @@ const App = () => (
   </QueryClientProvider>
 );
 
-createRoot(document.getElementById("root")!).render(<App />);
+const container = document.getElementById("root")!;
+if (!container._reactRootContainer) {
+  createRoot(container).render(<App />);
+}
