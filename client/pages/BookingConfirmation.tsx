@@ -7,39 +7,24 @@ import {
   MapPin,
   ArrowLeft,
   Users,
-  Mail,
 } from "lucide-react";
 
+const steelBlue = "text-blue-700";
+const steelBlueBg = "bg-blue-100";
+
 const eventTypes = {
-  "product-hunt-chats": {
-    title: "Product Hunt Chats",
-    duration: "15m",
-  },
-  interviews: {
-    title: "Interviews",
-    duration: "30m",
-  },
-  "product-demo": {
-    title: "Product Demo",
-    duration: "30m",
-  },
-  "everything-else": {
-    title: "Everything Else",
-    duration: "15m",
-  },
-  "recurring-event": {
-    title: "Recurring Event",
-    duration: "15m",
-  },
+  "product-hunt-chats": { title: "Product Hunt Chats", duration: "15m" },
+  interviews: { title: "Interviews", duration: "30m" },
+  "product-demo": { title: "Product Demo", duration: "30m" },
+  "everything-else": { title: "Everything Else", duration: "15m" },
+  "recurring-event": { title: "Recurring Event", duration: "15m" },
 };
 
 export default function BookingConfirmation() {
   const { eventId } = useParams<{ eventId: string }>();
   const [searchParams] = useSearchParams();
 
-  const eventType = eventId
-    ? eventTypes[eventId as keyof typeof eventTypes]
-    : null;
+  const eventType = eventId ? eventTypes[eventId as keyof typeof eventTypes] : null;
   const dateParam = searchParams.get("date");
   const timeParam = searchParams.get("time");
   const nameParam = searchParams.get("name");
@@ -49,12 +34,15 @@ export default function BookingConfirmation() {
 
   if (!eventType || !selectedDate || !timeParam || !nameParam || !emailParam) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-heading mb-4">
+      <div className="min-h-screen bg-white flex items-center justify-center px-6">
+        <div className="text-center max-w-md">
+          <h1 className="text-2xl font-semibold text-gray-900 mb-4">
             Invalid confirmation link
           </h1>
-          <Link to="/" className="text-accent hover:underline">
+          <Link
+            to="/"
+            className="inline-block px-5 py-2 bg-blue-700 text-white font-medium rounded-md shadow-sm hover:bg-blue-800 transition"
+          >
             Return to profile
           </Link>
         </div>
@@ -65,221 +53,185 @@ export default function BookingConfirmation() {
   const endTime = (() => {
     const [hours, minutes] = timeParam.split(":").map(Number);
     const duration = parseInt(eventType.duration);
-    const endTime = new Date();
+    const endTime = new Date(selectedDate);
     endTime.setHours(hours, minutes + duration);
-    return endTime.toTimeString().slice(0, 5);
+    return endTime.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
   })();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gradient-start via-gradient-mid to-gradient-end">
-      <div className="max-w-3xl mx-auto px-6 py-12">
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-lg mx-auto px-4 py-12">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-12">
+        <div className="flex items-center gap-3 mb-8">
           <Link
             to="/"
-            className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+            className="p-2 bg-gray-100 rounded-md shadow-sm hover:bg-gray-200 transition"
+            aria-label="Back to bookings"
+            title="Back to bookings"
           >
-            <ArrowLeft className="w-5 h-5 text-body-text" />
+            <ArrowLeft className={`w-5 h-5 ${steelBlue}`} />
           </Link>
-          <span className="text-sm text-secondary-text">Back to bookings</span>
+          <span className={`text-xs font-medium ${steelBlue} uppercase tracking-wide`}>
+            Back to bookings
+          </span>
         </div>
 
-        {/* Success Card */}
-        <div className="bg-white rounded-3xl p-12 shadow-2xl border border-white/20 backdrop-blur-sm">
-          {/* Success Icon with animated background */}
+        {/* Confirmation Card */}
+        <div className="bg-white rounded-xl p-8 shadow border border-gray-100">
+          {/* Checkmark Icon */}
           <div className="text-center mb-8">
-            <div className="relative inline-flex items-center justify-center mb-6">
-              <div className="absolute inset-0 bg-green-100 rounded-full animate-pulse"></div>
-              <div className="relative w-24 h-24 bg-green-50 rounded-full flex items-center justify-center animate-in zoom-in-95 duration-700 delay-300">
-                <Check className="w-12 h-12 text-green-600 animate-in zoom-in-50 duration-500 delay-500" />
+            <div className="relative flex items-center justify-center mb-5">
+              <div className={`relative w-14 h-14 ${steelBlueBg} rounded-full flex items-center justify-center shadow-sm`}>
+                <Check className={`w-8 h-8 ${steelBlue}`} />
               </div>
             </div>
-
-            <h1 className="text-4xl font-bold text-heading mb-4 animate-in slide-in-from-bottom-4 duration-500 delay-200">
-              You're all set!
+            <h1 className="text-xl font-semibold text-gray-900 mb-2">
+              Meeting Scheduled!
             </h1>
-
-            <p className="text-body-text text-lg leading-relaxed max-w-md mx-auto animate-in slide-in-from-bottom-4 duration-500 delay-300">
-              Your meeting has been scheduled and calendar invites have been
-              sent to all participants.
+            <p className="text-sm text-gray-600">
+              We have sent calendar invites to all the participants.
             </p>
           </div>
 
-          {/* Meeting Details Card */}
-          <div className="bg-gradient-to-br from-grey-container/30 to-grey-container/10 rounded-2xl p-8 mb-8 animate-in slide-in-from-bottom-8 duration-500 delay-400">
-            <div className="grid md:grid-cols-3 gap-8">
-              {/* Meeting Title */}
-              <div className="text-center">
-                <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <Calendar className="w-6 h-6 text-accent" />
-                </div>
-                <h3 className="text-sm font-medium text-secondary-text mb-2 uppercase tracking-wide">
-                  Meeting
-                </h3>
-                <p className="font-semibold text-heading text-lg mb-1">
-                  {eventType.title}
-                </p>
-                <p className="text-sm text-body-text">with Sanskar Yadav</p>
-              </div>
-
-              {/* Time */}
-              <div className="text-center">
-                <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <Clock className="w-6 h-6 text-accent" />
-                </div>
-                <h3 className="text-sm font-medium text-secondary-text mb-2 uppercase tracking-wide">
-                  Time
-                </h3>
-                <p className="font-semibold text-heading text-lg mb-1">
-                  {selectedDate.toLocaleDateString("en-US", {
-                    weekday: "long",
-                    month: "short",
-                    day: "numeric",
-                  })}
-                </p>
-                <p className="text-sm text-body-text">
-                  {timeParam} - {endTime} IST
-                </p>
-              </div>
-
-              {/* Location */}
-              <div className="text-center">
-                <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <MapPin className="w-6 h-6 text-accent" />
-                </div>
-                <h3 className="text-sm font-medium text-secondary-text mb-2 uppercase tracking-wide">
-                  Location
-                </h3>
-                <p className="font-semibold text-heading text-lg mb-1">
-                  Google Meet
-                </p>
-                <p className="text-sm text-body-text">Link in email</p>
-              </div>
-            </div>
+          {/* Meeting Details Vertical Stack */}
+          <div className="flex flex-col gap-4 mb-8">
+            <MeetingItem
+              icon={
+                <Calendar className={`w-5 h-5 ${steelBlue}`} />
+              }
+              label="Meeting"
+              labelClass={steelBlue}
+              primary={eventType.title}
+              secondary="with Sanskar Yadav"
+            />
+            <MeetingItem
+              icon={
+                <Clock className={`w-5 h-5 ${steelBlue}`} />
+              }
+              label="Time"
+              labelClass={steelBlue}
+              primary={selectedDate.toLocaleDateString("en-US", {
+                weekday: "short", month: "short", day: "numeric"
+              })}
+              secondary={`${timeParam} - ${endTime} IST`}
+            />
+            <MeetingItem
+              icon={
+                <MapPin className={`w-5 h-5 ${steelBlue}`} />
+              }
+              label="Location"
+              labelClass={steelBlue}
+              primary="Google Meet"
+              secondary="Link in email"
+            />
           </div>
 
           {/* Participants */}
-          <div className="mb-8 animate-in slide-in-from-bottom-8 duration-500 delay-500">
-            <div className="flex items-center gap-3 mb-4">
-              <Users className="w-5 h-5 text-secondary-text" />
-              <h3 className="text-lg font-semibold text-heading">
-                Participants
-              </h3>
+          <section className="mb-6">
+            <div className="flex items-center gap-3 mb-3">
+              <Users className={`w-5 h-5 ${steelBlue}`} />
+              <h3 className="text-base font-semibold text-gray-900">Participants</h3>
             </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="flex items-center gap-4 bg-accent/5 rounded-xl p-4">
-                <div className="w-12 h-12 bg-accent text-white rounded-xl flex items-center justify-center text-lg font-bold">
-                  S
-                </div>
-                <div>
-                  <p className="font-medium text-heading">Sanskar Yadav</p>
-                  <p className="text-sm text-secondary-text">
-                    sanskar@gmail.com
-                  </p>
-                  <span className="text-xs text-accent font-medium">Host</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-4 bg-grey-container/50 rounded-xl p-4">
-                <div className="w-12 h-12 bg-secondary text-body-text rounded-xl flex items-center justify-center text-lg font-bold">
-                  {nameParam.charAt(0).toUpperCase()}
-                </div>
-                <div>
-                  <p className="font-medium text-heading">{nameParam}</p>
-                  <p className="text-sm text-secondary-text">{emailParam}</p>
-                </div>
-              </div>
+            <div className="grid sm:grid-cols-2 gap-3">
+              <Participant
+                initial="S"
+                name="Sanskar Yadav"
+                email="sanskar@gmail.com"
+                host
+                accent={steelBlueBg + " " + steelBlue}
+              />
+              <Participant
+                initial={nameParam.charAt(0).toUpperCase()}
+                name={nameParam}
+                email={emailParam}
+                accent="bg-gray-200 text-gray-700"
+              />
             </div>
-          </div>
+          </section>
 
-          {/* Calendar Integration */}
-          <div className="text-center mb-8 animate-in slide-in-from-bottom-8 duration-500 delay-600">
-            <h4 className="text-lg font-semibold text-heading mb-4">
+          {/* Calendar Links */}
+          <section className="text-center mb-6">
+            <h4 className={`text-sm font-semibold text-gray-900 mb-3`}>
               Add to your calendar
             </h4>
-            <div className="flex justify-center gap-4">
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-grey-container hover:bg-grey-container hover:border-accent transition-all duration-200 p-4"
-                title="Google Calendar"
-              >
-                <svg
-                  className="w-6 h-6 mr-2"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
+            <div className="flex justify-center gap-3 flex-wrap">
+              {["Google", "Apple", "Outlook"].map((name) => (
+                <Button
+                  key={name}
+                  variant="outline"
+                  size="sm"
+                  className={`${steelBlue} border-gray-200 hover:bg-blue-50 p-2 rounded font-medium text-xs`}
                 >
-                  <path
-                    d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"
-                    fill="#4285F4"
-                  />
-                </svg>
-                Google
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-grey-container hover:bg-grey-container hover:border-accent transition-all duration-200 p-4"
-                title="Apple Calendar"
-              >
-                <svg
-                  className="w-6 h-6 mr-2"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"
-                    fill="#000"
-                  />
-                </svg>
-                Apple
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-grey-container hover:bg-grey-container hover:border-accent transition-all duration-200 p-4"
-                title="Outlook"
-              >
-                <svg
-                  className="w-6 h-6 mr-2"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M7 9v6c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2zm8 2v4H9v-4h6z"
-                    fill="#0078D4"
-                  />
-                </svg>
-                Outlook
-              </Button>
+                  {name}
+                </Button>
+              ))}
             </div>
-          </div>
+          </section>
 
           {/* Action Buttons */}
-          <div className="flex gap-4 animate-in slide-in-from-bottom-8 duration-500 delay-700">
+          <div className="flex gap-3 justify-center">
             <Button
               variant="outline"
-              className="flex-1 border-grey-container hover:bg-grey-container py-3"
+              className={`flex-1 border-gray-200 hover:bg-blue-50 py-2 rounded font-medium text-xs ${steelBlue}`}
             >
-              Reschedule Meeting
+              Reschedule
             </Button>
             <Button
               variant="outline"
-              className="flex-1 border-grey-container hover:bg-grey-container text-destructive hover:text-destructive py-3"
+              className="flex-1 border-gray-200 text-red-500 hover:bg-red-50 py-2 rounded font-medium text-xs"
             >
-              Cancel Meeting
+              Cancel
             </Button>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-12">
-          <div className="inline-flex items-center gap-2 text-accent font-medium">
-            <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
-              <span className="text-white text-sm font-bold">O</span>
+        <footer className={`text-center mt-12 ${steelBlue} text-xs font-medium`}>
+          <div className="inline-flex items-center gap-2">
+            <div className={`w-6 h-6 ${steelBlue} bg-blue-100 rounded flex items-center justify-center text-white font-bold text-[15px]`}>
+              O
             </div>
             OneHash
           </div>
-        </div>
+        </footer>
+      </div>
+    </div>
+  );
+}
+
+// Helper component for meeting item rows
+function MeetingItem({ icon, label, primary, secondary, labelClass }: { icon: React.ReactNode, label: string, primary: string, secondary?: string, labelClass?: string }) {
+  return (
+    <div className="flex items-center gap-4 p-0">
+      <div className={`w-10 h-10 flex items-center justify-center rounded ${steelBlueBg}`}>{icon}</div>
+      <div>
+        <div className={`text-xs font-medium uppercase ${labelClass}`}>{label}</div>
+        <div className="text-sm font-semibold text-gray-900">{primary}</div>
+        {secondary && <div className="text-xs text-gray-500">{secondary}</div>}
+      </div>
+    </div>
+  );
+}
+
+// Helper component for participants
+function Participant({ initial, name, email, host, accent }: { initial: string, name: string, email: string, host?: boolean, accent: string }) {
+  return (
+    <div className={`flex items-center gap-3 bg-gray-50 rounded p-3`}>
+      <div className={`w-9 h-9 rounded-full flex items-center justify-center font-semibold text-base select-none ${accent}`}>
+        {initial}
+      </div>
+      <div>
+        <div className="font-medium text-gray-900 text-sm">{name}</div>
+        <div className="text-xs text-gray-500">{email}</div>
+        {host && (
+          <span className="text-[10px] ml-1 px-2 py-0.5 rounded bg-gray-200 text-gray-700 font-medium uppercase">
+            Host
+          </span>
+        )}
       </div>
     </div>
   );
